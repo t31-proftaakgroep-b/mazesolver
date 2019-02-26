@@ -16,4 +16,3 @@ This folder contains Arduino related code
 
 ## Examples
 This folder contains all tests and examples.
-
