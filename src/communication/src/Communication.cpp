@@ -12,7 +12,9 @@ Communication::Communication(std::string IpAddress) //Client
 
 Communication::Communication() //server
 {
-    Type = NotInitialyzed;
+    //Type = NotInitialyzed;
+    Socket = new PTSocket(5000);
+
 }
 
 Communication::~Communication()
@@ -36,7 +38,6 @@ Communication::~Communication()
 
 void Communication::StartListening()
 {
-    Socket = new PTSocket(5000);
     Socket->Listen();
 }
 
@@ -99,7 +100,6 @@ Client* Communication::WaitForClient()
         return client;
     }
     return NULL;
-
 }
 
 

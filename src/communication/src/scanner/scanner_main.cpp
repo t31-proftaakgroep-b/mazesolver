@@ -11,8 +11,7 @@
 
 Communication* com;
 
-
-
+BRICKTYPE type;
 
 int
 main ()
@@ -20,22 +19,22 @@ main ()
   try
   {
     com = new Communication("127.0.0.1");
-    //MESSAGE* msg = new MESSAGE();
-    //BRICKTYPE type;
+    type = Scanner;
     //char bla[] = "Hello, world!";
 
 
-  }catch(std::runtime_error e)
+  }
+  catch(std::runtime_error e)
   {
     std::cout<<"error" << std::endl;
   }
 
-  // while(true)
-  // {
+  while(true)
+  {
+    com->SendCommand(ACK);
+    // usleep(10000000);
 
-  //usleep(10000000);
-
-  // }
+  }
   return 0;
 
 }
