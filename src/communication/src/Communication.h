@@ -11,7 +11,6 @@
 class Communication
 {
 private:
-    
     std::vector<Client*> Scanners;
     std::vector<Client*> Plotters;
     std::string IpAddress;

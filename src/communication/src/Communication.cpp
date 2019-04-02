@@ -125,12 +125,3 @@ Client* Communication::WaitForClient()
 //     }
 //     return Clients[i];
 // }
-
-
-// void Communication::PrintMessage(MESSAGE* msg)
-// {
-//   std::cout << "Message: \n\nType: " << msg->type << "\nModuleID: " << msg->ModuleID  << "\nRGBOrColor: " << msg->RGBOrColor <<
-//   "\nColor: " << msg->Color << "\nCommandOrResponse: " << msg->CommandOrResponse << "\nCommand: " << msg->Command
-//   << "\nReturnValue: " << msg->ReturnValue << std::endl;
-
-// }//"\nRGBValue: " << msg->RGBValue

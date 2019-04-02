@@ -2,7 +2,7 @@ STRUCT_DIR= ../struct
 
 CFLAGS=-Wall -Werror -Wextra -pedantic -std=gnu++11 -ggdb -O0 -I$(STRUCT_DIR) -Isrc -pthread #-static -pthread
 
-#HOST=192.168.0.191
+#HOST=127.0.0.1
 
 OUTPUT=hello
 

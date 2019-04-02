@@ -14,14 +14,6 @@ Communication* com;
 
 
 
-/*TYPE type;  
-    uint16_t ModuleID;
-    uint16_t RGBOrColor;
-    RGBCOLOR RGBValue;
-    uint16_t Color;
-    SendingCommandOrReturnValue CommandOrResponse;
-    std::string Command;
-    std::string ReturnValue;*/
 int
 main ()
 {
