@@ -10,6 +10,7 @@
 
 Communication* com;
 bool untilDoomsday = true;
+Client* client;
 
 int
 main ()
@@ -18,9 +19,9 @@ main ()
   while(untilDoomsday)
   {
     com->StartListening();
-    com->WaitForClient();
-    //Client* client = com->GetClient(0);  
-    COMMAND command = com->GetCommandReceived();
+    client = com->WaitForClient();
+    //Client* client = com->GetClient(0);
+    COMMAND command = client->GetMessageReceived();
     std::cout << command << std::endl;
   }
 

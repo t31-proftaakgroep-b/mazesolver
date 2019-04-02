@@ -31,9 +31,8 @@ main ()
 
   while(true)
   {
-    com->SendCommand(ACK);
+    com->SendCommand(Scan);
     // usleep(10000000);
-
   }
   return 0;
 

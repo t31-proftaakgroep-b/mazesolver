@@ -42,9 +42,12 @@ PTSocket::PTSocket(std::string host, int port)
          server->h_length);
     serv_addr.sin_port = htons(port);
 
-	if (connect(socketfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) 
+	int test = connect(socketfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr));
+	std::cout << "new socket??: " << test << std::endl;
+	if (test < 0)
+	{
 		throw std::runtime_error("Error connecting");
-
+	}
 }
 
 PTSocket::~PTSocket()
@@ -76,6 +79,7 @@ PTSocket::PTSocket(int port)
 	//server
 int PTSocket::Send(int data)
 {
+	//std::cout << data << std::endl;
 	return send(socketfd, &data, 1, 0);
 }
 
@@ -83,14 +87,16 @@ int PTSocket::Receive()
 {
 	int data;
 	data = -1;
-	recv(socketfd, &data, 1, 0);
+	//std::cout << "whatsup?" << std::endl;
+	std::cout << "Receive socket: " << socketfd << std::endl;
+	recv(socketfd, &data, sizeof(data), 0);
 	return data;
 }
 
 
 int PTSocket::Connect(std::string host)
 {
-	return 0;
+	return socketfd;
 	(void) host;
 }
 

@@ -6,7 +6,7 @@
 Communication::Communication(std::string IpAddress) //Client
 {
     Socket = new PTSocket(IpAddress, 5000);
-    Socket->Connect(IpAddress);
+    socketFd = Socket->Connect(IpAddress);
     this->IpAddress = IpAddress;
 }
 
@@ -38,6 +38,7 @@ Communication::~Communication()
 
 void Communication::StartListening()
 {
+    std::cout << "listening" << std::endl;
     Socket->Listen();
 }
 
@@ -92,6 +93,7 @@ void Communication::SendCommand(COMMAND command)
 Client* Communication::WaitForClient()
 {
     PTSocket* newSocket = Socket->Accept();
+    std::cout << "waiting for client socket: " << newSocket << std::endl;
     if(newSocket != NULL)
     {
         Client* client = new Client(newSocket);

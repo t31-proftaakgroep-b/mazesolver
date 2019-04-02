@@ -21,7 +21,7 @@ int Client::SendMessage(COMMAND command)
 
 COMMAND Client::GetMessageReceived()
 {
-	int command;// = new MESSAGE();
+	int command;
 	try
 	{
 		command = socket->Receive();

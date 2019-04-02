@@ -15,6 +15,7 @@ private:
     std::vector<Client*> Plotters;
     std::string IpAddress;
     PTSocket* Socket;
+	int socketFd; 
 	COMMAND Command;
     BRICKTYPE Type; //Client var
     //std::string Message;
