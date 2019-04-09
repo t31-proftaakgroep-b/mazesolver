@@ -5,7 +5,6 @@
 int main(void)
 {
     Server* server = new Server();
-    server->InitialiseSocket();
     //bool connected = false;
     int nrSockets = 0;
     
@@ -28,7 +27,7 @@ int main(void)
         else if (nrSockets > 0)
         {
             std::cout << "going to connect" << std::endl;
-            server->Connect();
+            server->AcceptConnection();
         }
 
         if (server->GetAmountOfConnectedClients() > 0)
@@ -48,10 +47,7 @@ int main(void)
 
                 if (!message.empty())
                 {
-                    if(!server->HandleMessage(activeSocketFd, message))
-                    {
-                        std::cout << "Error Parsing Message";
-                    }
+                    std::cout << message;
                 }
             }
         }       

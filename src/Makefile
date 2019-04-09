@@ -1,5 +1,4 @@
-CXXFLAGS=-Wall -Werror -pedantic -ggdb -O0 -std=c++11 -Iproduct
-#we are using C++11 because TinyXMLm uses a 'long long' type and C++ 98 does not support this
+CXXFLAGS=-Wall -Werror -pedantic -ggdb -O0 -std=c++11 -Isrc -static -pthread
 
 SERVER_SOURCES=$(wildcard Server/*.cpp)
 SERVER_HEADERS=$(wildcard Server/*.h)
@@ -11,24 +10,41 @@ CLIENT_HEADERS=$(wildcard Client/*.h)
 
 CLIENT_OBJECTS=$(CLIENT_SOURCES:.cpp=.o)
 
+SCANNER_SOURCES=$(wildcard Scanner/*.cpp)
+SCANNER_HEADERS=$(wildcard Scanner/*.h)
+
+SCANNER_OBJECTS=$(SCANNER_SOURCES:.cpp=.o)
+
+PLOTTER_SOURCES=$(wildcard Plotter/*.cpp)
+PLOTTER_HEADERS=$(wildcard Plotter/*.h)
+
+PLOTTER_OBJECTS=$(PLOTTER_SOURCES:.cpp=.o)
+
 HEADERS=$(wildcard *.h)
 
 SERVER_TARGET=server
 CLIENT_TARGET=client
+SCANNER_TARGET=scanner
+PLOTTER_TARGET=plotter
 
 CXX=g++
 
 .PHONY: all clean
 
-all: $(SERVER_TARGET) $(CLIENT_TARGET)
+all: $(SERVER_TARGET) $(SCANNER_TARGET) $(PLOTTER_TARGET)
 
 $(SERVER_TARGET): $(SERVER_SOURCES) $(SERVER_OBJECTS) $(HEADERS)
 	@$(CXX) $(CXXFLAGS) $(CPPFLAGS) -o $@ $(SERVER_SOURCES)
 
-
 $(CLIENT_TARGET): $(CLIENT_SOURCES) $(CLIENT_OBJECTS) $(HEADERS)
 	@$(CXX) $(CXXFLAGS) $(CPPFLAGS) -o $@ $(CLIENT_SOURCES)
 
+$(SCANNER_TARGET): $(SCANNER_SOURCES) $(SCANNER_OBJECTS) $(HEADERS)
+	@$(CXX) $(CXXFLAGS) $(CPPFLAGS) -o $@ $(SCANNER_SOURCES)
+
+$(PLOTTER_TARGET): $(PLOTTER_SOURCES) $(PLOTTER_OBJECTS) $(HEADERS)
+	@$(CXX) $(CXXFLAGS) $(CPPFLAGS) -o $@ $(PLOTTER_SOURCES)
+
 
 clean:
-	@rm -f $(SERVER_TARGET) $(CLIENT_TARGET) ./*/*.o
+	@rm -f $(SERVER_TARGET) $(CLIENT_TARGET) $(SCANNER_TARGET) $(PlOTTER_TARGET) ./*/*.o

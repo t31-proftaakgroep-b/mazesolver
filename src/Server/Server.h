@@ -2,7 +2,6 @@
 #define SERVER_H
 
 #include "../Protocol.h"
-#include "tinyxml2.h"
 
 #include <arpa/inet.h>
 #include <cstdio>
@@ -21,14 +20,13 @@ class Server
     Server();
     ~Server();
        
-    void InitialiseSocket();
-    bool HandleMessage(int fd, std::string message);
+    
+    //bool HandleMessage(int fd, std::string message);
     std::string ReceiveMessage(int fd);
-    bool Connect();
+    bool AcceptConnection();
     int checkConnection();
     int GetAmountOfConnectedClients();
     int CheckSocket();
-    std::string ReceiveFile(int fd, int fileSize);
 
     private:
     //SendMessage(std::string message);
@@ -43,11 +41,7 @@ class Server
     static const int SelectTimeout = 2;
     struct timeval timeout;
     void SendMessage(int fd, std::string message);
-    bool CheckKey(std::string key);
-    void SendFile(int fd, std::string key);
-    void DeleteFile(int fd, std::string key);
-    std::string GetRandomKey();
-    std::string GenerateRandomString();
+    void InitialiseSocket();
 
 };
 

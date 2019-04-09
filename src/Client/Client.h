@@ -19,22 +19,14 @@ class Client
     public:
     Client();
     ~Client();
-    //int Connect(std::string address);
-    int InitialiseSocket(std::string address); 
-    bool SendMessage(std::string message);
-    std::string ReceiveMessage();
-    void SendFile(std::string file, int fileSize);
-    std::string ReceiveFile(std::string fileName, int fileSize);
-    bool RequestSave(int fileSize);
-    int GetFileSize(std::string fileName);
-
     bool Disconnect();
+    int InitialiseSocket(std::string address); 
+    std::string ReceiveMessage();
+    bool SendMessage(std::string message);
 
     private:
     const std::string AckMessage;
     const std::string NackMessage;
-    const std::string FileLocation;
-
     bool WaitForAck();
 
 
@@ -43,8 +35,5 @@ class Client
 
 };
     
-
-
-
 
 #endif
