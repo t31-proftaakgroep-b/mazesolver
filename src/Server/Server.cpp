@@ -2,8 +2,6 @@
 #include <iostream> //ewl
 
 Server::Server() :
-AckMessage("ACK"),
-NackMessage("NACK"),
 FileLocation("/tmp/server")
 {
     InitialiseSocket();

@@ -2,6 +2,7 @@
 #define PLOTTER_H
 
 #include "../Protocol.h"
+#include "../Client/Client.h"
 
 #include <arpa/inet.h>
 #include <cstdio>

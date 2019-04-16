@@ -1,8 +1,8 @@
-#include "Plotter.h"
+#include "plotter.h"
 
 Plotter::Plotter()
 {
-    client = new Client(); 
+
 }
 
 Plotter::~Plotter()

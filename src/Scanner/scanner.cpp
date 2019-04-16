@@ -2,7 +2,7 @@
 
 Scanner::Scanner()
 {
-    client = new Client();
+
 }
 
 Scanner::~Scanner()
