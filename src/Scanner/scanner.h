@@ -24,7 +24,7 @@ class Scanner
         void ScanMaze();
     
     private:
-        Client* client;
+        Client client;
 
 };
 

@@ -24,7 +24,7 @@ class Plotter
         void PlotMaze();
     
     private:
-        Client* client;
+        Client client;
 };
 
 #endif

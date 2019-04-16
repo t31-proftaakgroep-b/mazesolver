@@ -14,7 +14,7 @@ static void showMenu( void )
 
 int main(void)
 {
-  Plotter* plotter = new Plotter();
+  Plotter plotter;
   //int socketFd;
   bool quit = false;
   //bool connect = 0;
@@ -30,19 +30,18 @@ int main(void)
     {
       case '1':
       {
-        plotter->PlotMaze();
+        plotter.PlotMaze();
       }
       break;
 
       case '2':
-      plotter->Disconnect();  
+      plotter.Disconnect();  
       //connect = 0;
       break;
 
       case '3':
-      plotter->Disconnect();
+      plotter.Disconnect();
       quit = true;
-      delete plotter;
       break;
 
       default:

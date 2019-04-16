@@ -4,7 +4,7 @@
 
 int main(void)
 {
-    Server* server = new Server();
+    Server server;
     //bool connected = false;
     int nrSockets = 0;
     
@@ -12,8 +12,8 @@ int main(void)
     while(true)
     {
         //std::cout << "nrSockets: " << nrSockets << std::endl;
-        nrSockets = server->checkConnection();
-        std::cout << "connected clients: " << server->GetAmountOfConnectedClients() << std::endl;
+        nrSockets = server.checkConnection();
+        std::cout << "connected clients: " << server.GetAmountOfConnectedClients() << std::endl;
 
         if (nrSockets < 0) // error situation
         {
@@ -27,18 +27,18 @@ int main(void)
         else if (nrSockets > 0)
         {
             std::cout << "going to connect" << std::endl;
-            server->AcceptConnection();
+            server.AcceptConnection();
         }
 
-        if (server->GetAmountOfConnectedClients() > 0)
+        if (server.GetAmountOfConnectedClients() > 0)
         {
             std::string message = "";
-            int activeSocketFd = server->CheckSocket();
+            int activeSocketFd = server.CheckSocket();
             if (activeSocketFd > 0)
             {
                 try
                 {
-                    message = server->ReceiveMessage(activeSocketFd);
+                    message = server.ReceiveMessage(activeSocketFd);
                 }
                 catch(const std::exception& e)
                 {
@@ -53,7 +53,6 @@ int main(void)
         }       
         
     }
-    delete server;
-    server = NULL;
+    
     return 0;
 }

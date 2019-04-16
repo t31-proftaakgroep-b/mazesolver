@@ -49,7 +49,6 @@ void Server::InitialiseSocket()
 
 std::string Server::ReceiveMessage(int fd)
 {
-    const int BufferSize = 100;
     char buffer[BufferSize];
     int nrBytes = read(fd, buffer, BufferSize - 1);
     if (nrBytes > 0)

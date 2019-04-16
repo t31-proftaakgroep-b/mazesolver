@@ -32,8 +32,6 @@ class Server
     //SendMessage(std::string message);
     int socketFd;   // ------v
     int connectFd;  // these 2 needs to be changed. We shoud've created theses in the main and used them as parameters and returns instead of global variable
-    const std::string AckMessage;
-    const std::string NackMessage;
     const std::string FileLocation;
     fd_set readFds;
     std::vector<int> fileDescriptors;

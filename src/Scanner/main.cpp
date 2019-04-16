@@ -14,7 +14,7 @@ static void showMenu( void )
 
 int main(void)
 {
-  Scanner* scanner = new Scanner();
+  Scanner scanner;
   //int socketFd;
   bool quit = false;
   //bool connect = 0;
@@ -30,19 +30,18 @@ int main(void)
     {
       case '1':
       {
-        scanner->ScanMaze();
+        scanner.ScanMaze();
       }
       break;
 
       case '2':
-      scanner->Disconnect();  
+      scanner.Disconnect();  
       //connect = 0;
       break;
 
       case '3':
-      scanner->Disconnect();
+      scanner.Disconnect();
       quit = true;
-      delete scanner;
       break;
 
       default:

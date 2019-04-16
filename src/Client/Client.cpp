@@ -1,10 +1,9 @@
 #include "Client.h"
 
-Client::Client():
-AckMessage("ACK"),
-NackMessage("NACK")
+Client::Client(std::string Address)
 {
-    InitialiseSocket("127.0.0.1");
+    Address = "127.0.0.1";
+    InitialiseSocket(Address);//niet doen!
 }
 
 Client::~Client()
@@ -18,8 +17,8 @@ bool Client::Disconnect()
     {
         perror("shutdown failed");
         close(socketFd);
-        exit(EXIT_FAILURE);
-        return true;
+        //TODO throw exception
+        return false;
     }
     close(socketFd);
     return true;
@@ -30,14 +29,14 @@ int Client::InitialiseSocket(std::string address)
     if (address.empty())
     {
         perror("No adress is given");
-        exit(EXIT_FAILURE);
+        return -1;
     }
 
     socketFd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (socketFd == -1)
     {
         perror("cannot create socket");
-        exit(EXIT_FAILURE);
+        return -1;
     }
 
     struct sockaddr_in sa;
@@ -45,11 +44,11 @@ int Client::InitialiseSocket(std::string address)
     sa.sin_family = AF_INET;
     sa.sin_port = htons(PortNumber);
 
-    int result = inet_pton(AF_INET, "127.0.0.1", &sa.sin_addr);
+    int result = inet_pton(AF_INET, address.c_str(), &sa.sin_addr);
     if (result != 1)
     {
         perror("could not convert ip address to network address structure");
-        exit(EXIT_FAILURE);
+        return -1;
     }
     else 
     {
@@ -58,25 +57,36 @@ int Client::InitialiseSocket(std::string address)
         {
             perror("connect failed");
             close(socketFd);
-            exit(EXIT_FAILURE);
+            return -1;
         }
 
         return result;
     }
+    return -1;
 }
 
-std::string Client::ReceiveMessage()
+bool Client::ReceiveMessage(std::string& messageReceived)
 {
-    const int BufferSize = 100;
     char buffer[BufferSize];
-    int nrBytes = read(socketFd, buffer, BufferSize - 1); //connectFd not initialized!!
+    int nrBytes = read(socketFd, buffer, BufferSize - 1);
     if (nrBytes >= 0)
     {
         buffer[nrBytes] = '\0';
-        //sleep (1);
+        messageReceived = buffer;
+        return true;
+    }
+
+    return false;
+}
+std::string Client::ReceiveMessage()
+{
+    char buffer[BufferSize];
+    int nrBytes = read(socketFd, buffer, BufferSize - 1);
+    if (nrBytes >= 0)
+    {
+        buffer[nrBytes] = '\0';
         return buffer;
     }
-    sleep (1);
 
     return "error occured";
 }
@@ -117,11 +127,11 @@ bool Client::WaitForAck()
 {
     std::string receivedMessage = ReceiveMessage();
 
-    if(receivedMessage == "ACK")
+    if(receivedMessage == AckMessage)
     {
         return true;
     }
-    else if(receivedMessage == "NACK")
+    else if(receivedMessage == NackMessage)
     {
         return false;
     }
