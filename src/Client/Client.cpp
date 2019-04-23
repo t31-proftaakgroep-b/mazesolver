@@ -78,6 +78,7 @@ bool Client::ReceiveMessage(std::string& messageReceived)
 
     return false;
 }
+
 std::string Client::ReceiveMessage()
 {
     char buffer[BufferSize];

@@ -12,10 +12,10 @@ Scanner::~Scanner()
 
 void Scanner::Disconnect()
 {
-
+    client.Disconnect();
 }
 
 void Scanner::ScanMaze()
 {
-    client.SendMessage("Send a scanned maze");
+    client.SendMessage("Send a scanned maze! \n");
 }

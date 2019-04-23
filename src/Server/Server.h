@@ -3,23 +3,21 @@
 
 #include "../Protocol.h"
 
+#include <algorithm>  
 #include <arpa/inet.h>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <iostream>
 #include <stdexcept>
 #include <sys/select.h>
 #include <unistd.h>
 #include <vector>
 
-
-
 class Server
 {  
     public:
     Server();
-    ~Server();
-       
     
     //bool HandleMessage(int fd, std::string message);
     std::string ReceiveMessage(int fd);

@@ -1,5 +1,4 @@
 #include "Server.h"
-#include <iostream> //ewl
 
 Server::Server() :
 FileLocation("/tmp/server")
@@ -7,19 +6,13 @@ FileLocation("/tmp/server")
     InitialiseSocket();
 }
 
-Server::~Server()
-{
-
-}
-
-
 void Server::InitialiseSocket()
 {
     socketFd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (socketFd < 0)
     {
-        perror("cannot create socket");
-        exit(EXIT_FAILURE);
+        //TODO uitzoeken/vragen wat we hiermee moeten
+        throw std::bad_exception();
     }   
 
     struct sockaddr_in sa;
@@ -27,7 +20,6 @@ void Server::InitialiseSocket()
     sa.sin_family = AF_INET;
     sa.sin_port = htons(PortNumber);
     sa.sin_addr.s_addr = htonl(INADDR_ANY);
-
     if (bind(socketFd, (struct sockaddr*)&sa, sizeof sa) < 0)
     {
         perror("bind failed");
@@ -60,7 +52,9 @@ std::string Server::ReceiveMessage(int fd)
     else if (nrBytes == 0)
     {
         //return "CLOSED";
-        throw std::invalid_argument("Connection closed");
+        //throw std::invalid_argument("Connection closed");
+        fileDescriptors.erase(std::find(std::begin(fileDescriptors), std::end(fileDescriptors), fd));
+
     }
 
     else if (nrBytes == -1)
