@@ -25,7 +25,7 @@ class Server
     std::string ReceiveMessage(int fd);
     bool AcceptConnection();
     int checkConnection();
-    int GetAmountOfConnectedClients();
+    int GetNumberOfConnectedClients();
     int CheckSocket();
 
     private:
@@ -38,7 +38,7 @@ class Server
 
     static const int SelectTimeout = 2;
     struct timeval timeout;
-    void SendMessage(int fd, std::string message);
+    void SendMessage(int fd, const std::string &message);
     void InitialiseSocket();
 
 };

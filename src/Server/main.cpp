@@ -13,7 +13,7 @@ int main(void)
     {
         //std::cout << "nrSockets: " << nrSockets << std::endl;
         nrSockets = server.checkConnection();
-        std::cout << "connected clients: " << server.GetAmountOfConnectedClients() << std::endl;
+        std::cout << "connected clients: " << server.GetNumberOfConnectedClients() << std::endl;
 
         if (nrSockets < 0) // error situation
         {
@@ -30,7 +30,7 @@ int main(void)
             server.AcceptConnection();
         }
 
-        if (server.GetAmountOfConnectedClients() > 0)
+        if (server.GetNumberOfConnectedClients() > 0)
         {
             std::string message = "";
             int activeSocketFd = server.CheckSocket();

@@ -116,7 +116,8 @@ bool Client::SendMessage(std::string message)
          scanner->Connect(&socketFd);
                   ^ckReceived = true;
             rd ‘Connect’
-         scanner->Connect(&socketFd);
+         scanner->Connect(&socketFd);OfConnectedClients();
+    int CheckSocket();
                   ^eturnValue = true;
         }
     }*/

@@ -67,12 +67,12 @@ std::string Server::ReceiveMessage(int fd)
     {
         //TODO: Throw exception
     }
-
+    
     return "";
 }
 
 
-void Server::SendMessage(int fd, std::string message)
+void Server::SendMessage(int fd, const std::string &message)
 {
     size_t nrBytes = send(fd, message.c_str(), message.length(), 0);
     
@@ -106,7 +106,7 @@ int Server::checkConnection()
 
 }
 
-int Server::GetAmountOfConnectedClients()
+int Server::GetNumberOfConnectedClients()
 {
     return fileDescriptors.size() -1;
 }
