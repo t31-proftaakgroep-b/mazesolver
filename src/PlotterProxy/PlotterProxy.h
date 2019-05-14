@@ -1,5 +1,5 @@
-#ifndef TCPCLIENT_H
-#define TCPCLIENT_H
+#ifndef PLOTTERPROXY_H
+#define PLOTTERPROXY_H
 
 #include <stdint.h>
 #include <string>

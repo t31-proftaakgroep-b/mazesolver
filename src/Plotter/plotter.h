@@ -2,6 +2,7 @@
 #define PLOTTER_H
 
 #include "../Protocol.h"
+#include "../ClientState.h"
 #include "../Client/Client.h"
 
 #include <arpa/inet.h>
@@ -13,7 +14,6 @@
 #include <unistd.h>
 #include <vector>
 
-
 class Plotter
 {  
     public:
@@ -21,6 +21,7 @@ class Plotter
         ~Plotter();
     
         void Disconnect();
+        ClientState GetState();
         void PlotMaze();
     
     private:

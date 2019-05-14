@@ -2,6 +2,7 @@
 #define SCANNER_H
 
 #include "../Client/Client.h"
+#include "../ClientState.h"
 #include "../Protocol.h"
 
 #include <arpa/inet.h>
@@ -21,7 +22,9 @@ class Scanner
         ~Scanner();
 
         void Disconnect();
+        ClientState GetState();
         void ScanMaze();
+        
     
     private:
         Client client;
