@@ -4,4 +4,14 @@
 #include <stdint.h>
 #include <string>
 
+class PlotterProxy
+{
+    public:
+        PlotterProxy();
+        void PrintSolution();
+        
+    private:
+        void ReceiveSolution();
+};
+
 #endif

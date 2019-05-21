@@ -15,7 +15,12 @@ void Plotter::Disconnect()
     client.Disconnect();
 }
 
-void Plotter::PlotMaze()
+void Plotter::PrintSolution()
 {
     std::cout << "Maze has been plotted" << std::endl;
+}
+
+ClientState Plotter::GetState()
+{
+    return tcpClient.GetClientState();
 }

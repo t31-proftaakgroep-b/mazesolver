@@ -19,3 +19,18 @@ void Scanner::ScanMaze()
 {
     client.SendMessage("Send a scanned maze! \n");
 }
+
+ClientState Scanner::GetState()
+{
+    return tcpClient.GetClientState();
+}
+        
+bool Scanner::Save(int fileSize)
+{
+    return false;
+}
+               
+void Scanner::SendFile(std::string fileName)
+{
+
+}

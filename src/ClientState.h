@@ -1,7 +1,7 @@
 #ifndef CLIENTSTATE_H
 #define CLIENTSTATE_H
 
-enum State
+enum ClientState
 {
     Idle,
     Busy,

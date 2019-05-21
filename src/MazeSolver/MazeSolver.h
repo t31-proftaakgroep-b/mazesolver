@@ -8,6 +8,7 @@ class MazeSolver
 {
     public:
         MazeSolver();
+        ~MazeSolver();
         void SolveMaze();
 
     private:

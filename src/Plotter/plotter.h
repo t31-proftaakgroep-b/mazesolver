@@ -4,6 +4,7 @@
 #include "../Protocol.h"
 #include "../ClientState.h"
 #include "../Client/Client.h"
+#include "../TCPClient/TCPClient.h"
 
 #include <arpa/inet.h>
 #include <cstdio>
@@ -22,10 +23,11 @@ class Plotter
     
         void Disconnect();
         ClientState GetState();
-        void PlotMaze();
+        void PrintSolution();
     
     private:
         Client client;
+        TCPClient tcpClient;
 };
 
 #endif

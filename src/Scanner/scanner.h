@@ -2,6 +2,7 @@
 #define SCANNER_H
 
 #include "../Client/Client.h"
+#include "../TCPClient/TCPClient.h"
 #include "../ClientState.h"
 #include "../Protocol.h"
 
@@ -24,10 +25,12 @@ class Scanner
         void Disconnect();
         ClientState GetState();
         void ScanMaze();
-        
-    
+        bool Save(int fileSize);
+        void SendFile(std::string fileName);
+
     private:
         Client client;
+        TCPClient tcpClient;
 
 };
 

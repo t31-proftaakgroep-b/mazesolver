@@ -3,7 +3,7 @@
 
 class IScanner
 {
-    public virtual IScanner(){};
+    virtual ~IScanner(){};
     virtual int ReadValue();
 };
 
