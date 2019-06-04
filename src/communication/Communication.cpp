@@ -1,13 +1,6 @@
-#include <stdlib.h>
-#include <string.h>
-#include <exception>
-#include <iostream>
-
-#include "Client.h"
 #include "Communication.h"
 
-
-Communication::Communication(PTSocket* socket)
+/*Communication::Communication(PTSocket* socket)
 {
 	this->socket = socket;
 	type = NotInitialyzed;
@@ -56,7 +49,7 @@ Communication::~Client()
 Communication::GetHost()
 {
 	return socket->GetHost();
-}
+}*/
 
 //Don't know what this above means but it is shit
 

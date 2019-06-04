@@ -30,7 +30,7 @@ int main(void)
     {
       case '1':
       {
-        plotter.PlotMaze();
+        plotter.PrintSolution();
       }
       break;
 

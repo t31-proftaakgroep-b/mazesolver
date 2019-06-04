@@ -1,8 +1,8 @@
 #ifndef IMOTOR_H
 #define IMOTOR_H
 
-#include "Direction.h"
-#include "Point.h"
+#include "../Motor/Direction.h"
+#include "../Motor/Point.h"
 #include <string>
 
 class IMotor

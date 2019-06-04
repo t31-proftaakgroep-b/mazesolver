@@ -2,7 +2,7 @@
 #define ICOMMUNICATION_H
 
 #include <string>
-#include "Client.h"
+#include "../Client/Client.h"
 
 class ICommunication
 {

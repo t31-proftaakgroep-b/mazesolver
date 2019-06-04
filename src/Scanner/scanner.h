@@ -29,7 +29,7 @@ class Scanner
         void SendFile(std::string fileName);
 
     private:
-        Client client;
+        //Client client;
         TCPClient tcpClient;
 
 };

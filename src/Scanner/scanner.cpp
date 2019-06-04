@@ -1,6 +1,6 @@
 #include "scanner.h"
 
-Scanner::Scanner():client("127.0.0.1")
+Scanner::Scanner():tcpClient()//("127.0.0.1")
 {
 
 }
@@ -12,12 +12,14 @@ Scanner::~Scanner()
 
 void Scanner::Disconnect()
 {
-    client.Disconnect();
+    tcpClient.Disconnect();
+    //client.Disconnect();
 }
 
 void Scanner::ScanMaze()
 {
-    client.SendMessage("Send a scanned maze! \n");
+    tcpClient.SendMessage("Send a scanned maze! \n");
+    //client.SendMessage("Send a scanned maze! \n");
 }
 
 ClientState Scanner::GetState()

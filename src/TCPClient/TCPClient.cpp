@@ -28,11 +28,21 @@ void TCPClient::SendCurrentState()
 std::string TCPClient::ReceiveMessage()
 {
     std::string message = "";
+    return message;
 }
 
-void TCPClient::SendMessage()
+bool TCPClient::SendMessage(std::string message)
 {
-    
+    bool returnValue = false;
+    size_t nrBytes = send(socketFd, message.c_str(), message.length(), 0);
+    if (nrBytes != message.length())
+    {
+        std::string errorMessage = "not everything is sent (" + nrBytes + '/' + message.length();
+        errorMessage += " bytes sent)";
+        perror(errorMessage.c_str());
+    }
+
+    return returnValue;
 }
 
 ClientState TCPClient::GetClientState() const
