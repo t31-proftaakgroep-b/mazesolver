@@ -73,6 +73,7 @@ void Server::SendMessage(int fd, const std::string &message)
     if (nrBytes != message.length())
     {
         //std::cout << "not everything is sent (" << nrBytes << "/" << text.length() << " bytes sent)\n";
+      // Waarom geen while-lus om de rest te versturen?
     }
 }
 
@@ -83,7 +84,7 @@ bool Server::AcceptConnection()
     {
         perror("accept failed");
         close(newFd);
-        exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE); // Waarom hier een exit? Waarom niet gewoon doorgaan?
     }
     fileDescriptors.push_back(newFd);
     return true;

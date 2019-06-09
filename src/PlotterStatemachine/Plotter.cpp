@@ -68,7 +68,9 @@ States Plotter::HandleCalibratingState(Events ev)
     {
         case calibratingDone:
             CalibratingExitActions();
-            result = CALIBRATING;
+            result = CALIBRATING; // Je bedoelt Calibrated?
+            // En hier dan ook de CalibratedEntryActons ?
+            // Anders staat de currentCalibratedState mogelijk fout
             IdleEntryActions();
             break;
         default:

@@ -53,6 +53,9 @@ Communication::GetHost()
 
 //Don't know what this above means but it is shit
 
+//Not a very professional way of saying stuff. Perhaps we should call
+//it a work in progress.
+
 Communication::Communication(std::string ip, int* socketFD)
 {
 

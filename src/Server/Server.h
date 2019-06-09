@@ -29,7 +29,7 @@ class Server
     private:
     //SendMessage(std::string message);
     int socketFd;   // ------v
-    int connectFd;  // these 2 needs to be changed. We shoud've created theses in the main and used them as parameters and returns instead of global variable
+    int connectFd;  // these 2 needs to be changed. We shoud've created theses in the main and used them as parameters and returns instead of global variable // Waarom?
     const std::string FileLocation;
     fd_set readFds;
     std::vector<int> fileDescriptors;
@@ -37,7 +37,7 @@ class Server
     static const int SelectTimeout = 2;
     struct timeval timeout;
     void SendMessage(int fd, const std::string &message);
-    void InitialiseSocket();
+    void InitialiseSocket`();
 
 };
 

@@ -3,6 +3,20 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+*.o
+src/client
+src/communicationn
+src/mazesolver
+src/motor
+src/plotter
+src/plotterproxy
+src/plotterstatemachine
+src/scanner
+src/scannerproxy
+src/sensor
+src/server
+src/tcpclient
+
 # User-specific files
 *.suo
 *.user

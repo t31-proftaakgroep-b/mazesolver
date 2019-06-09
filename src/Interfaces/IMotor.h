@@ -1,6 +1,7 @@
 #ifndef IMOTOR_H
 #define IMOTOR_H
 
+// horen Point.h en Direction.h niet ook in de interfaces directory?
 #include "../Motor/Direction.h"
 #include "../Motor/Point.h"
 #include <string>

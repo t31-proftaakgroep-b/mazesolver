@@ -4,6 +4,13 @@ Client::Client(std::string Address)
 {
     Address = "127.0.0.1";
     InitialiseSocket(Address);//niet doen!
+
+    // Het voelt wat schizofreen, als je in je code eerst iets doet,
+    // en dan er in commentaar achter zet dat dat een slecht idee is.
+    //
+    // Moet je niet iets doen met de return-value van InitialiseSocket() ?
+    //
+    // Je overschrijft (nog steeds) hier het argument dat je meekrijgt.
 }
 
 Client::~Client()
@@ -24,6 +31,8 @@ bool Client::Disconnect()
     return true;
 }
 
+// Als ik het goed zie, retourneert deze functie 1 of -1. Waarom dan
+// geen bool, zoals hierboven bij Disconnect()? Waarom geen exceptie?
 int Client::InitialiseSocket(std::string address)
 {
     if (address.empty())
@@ -98,6 +107,7 @@ bool Client::SendMessage(std::string message)
     size_t nrBytes = send(socketFd, message.c_str(), message.length(), 0);
     if (nrBytes != message.length())
     {
+      // Waarom gebruik je geen while-lus om de rest op te sturen?
         std::string errorMessage = "not everything is sent (" + nrBytes + '/' + message.length();
         errorMessage += " bytes sent)";
         perror(errorMessage.c_str());
@@ -122,6 +132,9 @@ bool Client::SendMessage(std::string message)
                   ^eturnValue = true;
         }
     }*/
+
+    // Deze method retourneert altijd false? Dan zal dat door de
+    // aanroepers vast niet gecheckt worden.
     return returnValue;
 }
 
