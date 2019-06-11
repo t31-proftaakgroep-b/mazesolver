@@ -24,19 +24,19 @@ bool Client::Disconnect()
     return true;
 }
 
-int Client::InitialiseSocket(std::string address)
+bool Client::InitialiseSocket(std::string address)
 {
     if (address.empty())
     {
         perror("No adress is given");
-        return -1;
+        return false;
     }
 
     socketFd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (socketFd == -1)
     {
         perror("cannot create socket");
-        return -1;
+        return false;
     }
 
     struct sockaddr_in sa;
@@ -48,7 +48,7 @@ int Client::InitialiseSocket(std::string address)
     if (result != 1)
     {
         perror("could not convert ip address to network address structure");
-        return -1;
+        return false;
     }
     else 
     {
@@ -57,12 +57,12 @@ int Client::InitialiseSocket(std::string address)
         {
             perror("connect failed");
             close(socketFd);
-            return -1;
+            return false;
         }
 
         return result;
     }
-    return -1;
+    return false;
 }
 
 bool Client::ReceiveMessage(std::string& messageReceived)
@@ -95,33 +95,21 @@ std::string Client::ReceiveMessage()
 bool Client::SendMessage(std::string message)
 {
     bool returnValue = false;
-    size_t nrBytes = send(socketFd, message.c_str(), message.length(), 0);
+    size_t nrBytes = 0;
+    while(nrBytes != message.length())
+    {
+        nrBytes = send(socketFd, message.c_str(), message.length(), 0);
+    }
+    returnValue = WaitForAck();
+
+    /*size_t nrBytes = send(socketFd, message.c_str(), message.length(), 0);
     if (nrBytes != message.length())
     {
         std::string errorMessage = "not everything is sent (" + nrBytes + '/' + message.length();
         errorMessage += " bytes sent)";
         perror(errorMessage.c_str());
-    }
-    /*bool ackReceived = false;
-    while(!ackReceived)
-    {
-        std::string receivedMessage = ReceiveMessage();
-
-        if(red ‘Connect’
-         scanner->Connect(&socketFd);
-                  ^ceivedMessage == "ACK")
-        {d ‘Connect’
-         scanner->Connect(&socketFd);
-                  ^
-            ad ‘Connect’
-         scanner->Connect(&socketFd);
-                  ^ckReceived = true;
-            rd ‘Connect’
-         scanner->Connect(&socketFd);OfConnectedClients();
-    int CheckSocket();
-                  ^eturnValue = true;
-        }
     }*/
+
     return returnValue;
 }
 

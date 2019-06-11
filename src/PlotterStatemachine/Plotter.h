@@ -9,16 +9,16 @@ class Plotter
 {
     public:
         Plotter();
-        void HandleEvent(Events ev);
-            States HandleUninitializedState(Events ev);
-            States HandleCalibratingState(Events ev);
-            States HandleCalibratedState(Events ev);
-        void HandleCalibratedEvents (Events ev);
-            Calibrated_States HandleIdleState(Events ev);
-            Calibrated_States HandleBusyState(Events ev); 
+        void HandleEvent(Event ev);
+        State HandleUninitializedState(Event ev);
+        State HandleCalibratingState(Event ev);
+        State HandleCalibratedState(Event ev);
+        void HandleCalibratedEvent (Event ev);
+        Calibrated_State HandleIdleState(Event ev);
+        Calibrated_State HandleBusyState(Event ev); 
     private:
-        States currentState;
-        Calibrated_States currentCalibratedState;
+        State currentState;
+        Calibrated_State currentCalibratedState;
 
         void UninitializedEntryActions();
         void UninitializedExitActions();

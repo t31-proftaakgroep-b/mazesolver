@@ -1,7 +1,7 @@
 #ifndef EVENTS_H
 #define EVENTS_H
 
-enum Events
+enum Event
 {
     cmdCalibrate,
     calibratingDone,

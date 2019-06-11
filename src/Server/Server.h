@@ -36,9 +36,10 @@ class Server
 
     static const int SelectTimeout = 2;
     struct timeval timeout;
-    void SendMessage(int fd, const std::string &message);
     void InitialiseSocket();
-
+    std::string ReceiveMessage();
+    void SendMessage(int fd, const std::string &message);
+    bool WaitForAck();
 };
 
 #endif

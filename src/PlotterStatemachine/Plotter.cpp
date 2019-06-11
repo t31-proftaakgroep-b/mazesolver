@@ -8,7 +8,7 @@ Plotter::Plotter()
 {
 }
 
-void Plotter::HandleEvent(Events ev)
+void Plotter::HandleEvent(Event ev)
 {
     switch (currentState)
     {
@@ -27,7 +27,7 @@ void Plotter::HandleEvent(Events ev)
     };
 }
 
-void Plotter::HandleCalibratedEvents(Events ev)
+void Plotter::HandleCalibratedEvent(Event ev)
 {
     switch(currentCalibratedState)    
     {
@@ -43,9 +43,9 @@ void Plotter::HandleCalibratedEvents(Events ev)
     }
 }
 
-States Plotter::HandleUninitializedState(Events ev)
+State Plotter::HandleUninitializedState(Event ev)
 {
-    States result = UNINITIALIZED;
+    State result = UNINITIALIZED;
 
     switch (ev)
     {
@@ -60,15 +60,16 @@ States Plotter::HandleUninitializedState(Events ev)
     return result;
 }
 
-States Plotter::HandleCalibratingState(Events ev)
+State Plotter::HandleCalibratingState(Event ev)
 {
-    States result = CALIBRATING;
+    State result = CALIBRATING;
 
     switch (ev)
     {
         case calibratingDone:
             CalibratingExitActions();
-            result = CALIBRATING;
+            result = CALIBRATED;
+            CalibratedEntryActions();
             IdleEntryActions();
             break;
         default:
@@ -77,9 +78,9 @@ States Plotter::HandleCalibratingState(Events ev)
     return result;
 }
 
-States Plotter::HandleCalibratedState(Events ev)
+State Plotter::HandleCalibratedState(Event ev)
 {
-    States result = CALIBRATED;
+    State result = CALIBRATED;
 
     switch (ev)
     {
@@ -94,9 +95,9 @@ States Plotter::HandleCalibratedState(Events ev)
     return result;
 }
 
-Calibrated_States Plotter::HandleIdleState(Events ev)
+Calibrated_State Plotter::HandleIdleState(Event ev)
 {
-    Calibrated_States result = IDLE;
+    Calibrated_State result = IDLE;
 
     switch (ev)
     {
@@ -111,9 +112,9 @@ Calibrated_States Plotter::HandleIdleState(Events ev)
     return result;
 }
 
-Calibrated_States Plotter::HandleBusyState(Events ev)
+Calibrated_State Plotter::HandleBusyState(Event ev)
 {
-    Calibrated_States result = BUSY;
+    Calibrated_State result = BUSY;
 
     switch (ev)
     {

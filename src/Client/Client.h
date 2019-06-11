@@ -20,7 +20,7 @@ class Client
     Client(std::string Address);
     ~Client();
     bool Disconnect();
-    int InitialiseSocket(std::string address);
+    bool InitialiseSocket(std::string address);
     std::string ReceiveMessage();
     bool ReceiveMessage(std::string& receivedMessage);
     bool SendMessage(std::string message);

@@ -8,7 +8,7 @@ Scanner::Scanner()
 {
 }
 
-void Scanner::HandleEvent(Events ev)
+void Scanner::HandleEvent(Event ev)
 {
     switch (currentState)
     {
@@ -27,7 +27,7 @@ void Scanner::HandleEvent(Events ev)
     };
 }
 
-void Scanner::HandleCalibratedEvents(Events ev)
+void Scanner::HandleCalibratedEvent(Event ev)
 {
     switch(currentCalibratedState)    
     {
@@ -46,9 +46,9 @@ void Scanner::HandleCalibratedEvents(Events ev)
     }
 }
 
-States Scanner::HandleUninitializedState(Events ev)
+State Scanner::HandleUninitializedState(Event ev)
 {
-    States result = UNINITIALIZED;
+    State result = UNINITIALIZED;
 
     switch (ev)
     {
@@ -63,15 +63,16 @@ States Scanner::HandleUninitializedState(Events ev)
     return result;
 }
 
-States Scanner::HandleCalibratingState(Events ev)
+State Scanner::HandleCalibratingState(Event ev)
 {
-    States result = CALIBRATING;
+    State result = CALIBRATING;
 
     switch (ev)
     {
         case calibratingDone:
             CalibratingExitActions();
-            result = CALIBRATING;
+            result = CALIBRATED;
+            CalibratedEntryActions();
             IdleEntryActions();
             break;
         default:
@@ -80,9 +81,9 @@ States Scanner::HandleCalibratingState(Events ev)
     return result;
 }
 
-States Scanner::HandleCalibratedState(Events ev)
+State Scanner::HandleCalibratedState(Event ev)
 {
-    States result = CALIBRATED;
+    State result = CALIBRATED;
 
     switch (ev)
     {
@@ -97,9 +98,9 @@ States Scanner::HandleCalibratedState(Events ev)
     return result;
 }
 
-Calibrated_States Scanner::HandleIdleState(Events ev)
+Calibrated_State Scanner::HandleIdleState(Event ev)
 {
-    Calibrated_States result = IDLE;
+    Calibrated_State result = IDLE;
 
     switch (ev)
     {
@@ -114,9 +115,9 @@ Calibrated_States Scanner::HandleIdleState(Events ev)
     return result;
 }
 
-Calibrated_States Scanner::HandleBusyState(Events ev)
+Calibrated_State Scanner::HandleBusyState(Event ev)
 {
-    Calibrated_States result = BUSY;
+    Calibrated_State result = BUSY;
 
     switch (ev)
     {
@@ -131,9 +132,9 @@ Calibrated_States Scanner::HandleBusyState(Events ev)
     return result;
 }
 
-Calibrated_States Scanner::HandleSendingSolutionState(Events ev)
+Calibrated_State Scanner::HandleSendingSolutionState(Event ev)
 {
-    Calibrated_States result = SENDINGSOLUTION;
+    Calibrated_State result = SENDINGSOLUTION;
 
     switch (ev)
     {

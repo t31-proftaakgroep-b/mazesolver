@@ -68,11 +68,43 @@ std::string Server::ReceiveMessage(int fd)
 
 void Server::SendMessage(int fd, const std::string &message)
 {
-    size_t nrBytes = send(fd, message.c_str(), message.length(), 0);
-    
-    if (nrBytes != message.length())
+    size_t nrBytes = 0;
+    while(nrBytes != message.length())
     {
-        //std::cout << "not everything is sent (" << nrBytes << "/" << text.length() << " bytes sent)\n";
+        nrBytes = send(socketFd, message.c_str(), message.length(), 0);
+    }
+
+}
+
+std::string Server::ReceiveMessage()
+{
+    char buffer[BufferSize];
+    int nrBytes = read(socketFd, buffer, BufferSize - 1);
+    if (nrBytes >= 0)
+    {
+        buffer[nrBytes] = '\0';
+        return buffer;
+    }
+
+    return "error occured";
+}
+
+bool Server::WaitForAck()
+{
+    std::string receivedMessage = ReceiveMessage();
+
+    if(receivedMessage == AckMessage)
+    {
+        return true;
+    }
+    else if(receivedMessage == NackMessage)
+    {
+        return false;
+    }
+    else
+    {
+        //should throw error, will return false for now
+        return false;
     }
 }
 
@@ -83,9 +115,11 @@ bool Server::AcceptConnection()
     {
         perror("accept failed");
         close(newFd);
-        exit(EXIT_FAILURE);
     }
-    fileDescriptors.push_back(newFd);
+    else
+    {
+        fileDescriptors.push_back(newFd);
+    }
     return true;
 }
 
@@ -97,7 +131,6 @@ int Server::checkConnection()
         returnval = 0;
     }
     return returnval;
-
 }
 
 int Server::GetNumberOfConnectedClients()
@@ -112,7 +145,6 @@ int Server::CheckSocket()
 
     FD_ZERO(&readFds);
     
-
     for(unsigned int i = 0; i < fileDescriptors.size(); i++)
     {
         FD_SET(fileDescriptors[i], &readFds);
@@ -128,7 +160,6 @@ int Server::CheckSocket()
                 return fileDescriptors[i];
             }
         }
-
         //returnval = FD_ISSET(fd, &readFds);
     }
     return 0;

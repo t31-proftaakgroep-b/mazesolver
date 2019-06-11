@@ -1,14 +1,14 @@
 #ifndef STATES_H
 #define STATES_H
 
-enum States
+enum State
 {
     UNINITIALIZED,
     CALIBRATING,
     CALIBRATED  
 };
 
-enum Calibrated_States
+enum Calibrated_State
 {
     IDLE,
     BUSY,
