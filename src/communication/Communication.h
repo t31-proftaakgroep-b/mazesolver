@@ -14,15 +14,18 @@
 class Communication
 {
     public:
-        Communication(std::string ip, int* socketFD);
+        Communication(int socketFD);
         ~Communication();
         Bricktype GetBrickType();
-        void SendMessage(std::string message);
+        bool SendMessage(std::string message);
         std::string ReceiveMessage();
         Client* WaitForClient();
+        bool WaitForAck();
 
     private:
         Bricktype brickType;
+        int socketFd;
+        std::string ipAddress;
 
 };
 

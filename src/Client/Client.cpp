@@ -1,9 +1,9 @@
 #include "Client.h"
-
-Client::Client(std::string Address)
+//Some must be deleted here, since we must use communication
+Client::Client()
 {
-    Address = "127.0.0.1";
-    InitialiseSocket(Address);//niet doen!
+    //Address = "127.0.0.1";
+    //InitialiseSocket(Address);//niet doen!
 }
 
 Client::~Client()
@@ -11,7 +11,7 @@ Client::~Client()
     
 }
 
-bool Client::Disconnect()
+/* bool Client::Disconnect()
 {
     if (shutdown(socketFd, SHUT_RDWR) < 0)
     {
@@ -22,9 +22,9 @@ bool Client::Disconnect()
     }
     close(socketFd);
     return true;
-}
+}*/
 
-bool Client::InitialiseSocket(std::string address)
+/* bool Client::InitialiseSocket(std::string address)
 {
     if (address.empty())
     {
@@ -63,9 +63,9 @@ bool Client::InitialiseSocket(std::string address)
         return result;
     }
     return false;
-}
+}*/
 
-bool Client::ReceiveMessage(std::string& messageReceived)
+/*bool Client::ReceiveMessage(std::string& messageReceived)
 {
     char buffer[BufferSize];
     int nrBytes = read(socketFd, buffer, BufferSize - 1);
@@ -77,9 +77,9 @@ bool Client::ReceiveMessage(std::string& messageReceived)
     }
 
     return false;
-}
+}*/
 
-std::string Client::ReceiveMessage()
+/* std::string Client::ReceiveMessage()
 {
     char buffer[BufferSize];
     int nrBytes = read(socketFd, buffer, BufferSize - 1);
@@ -102,14 +102,6 @@ bool Client::SendMessage(std::string message)
     }
     returnValue = WaitForAck();
 
-    /*size_t nrBytes = send(socketFd, message.c_str(), message.length(), 0);
-    if (nrBytes != message.length())
-    {
-        std::string errorMessage = "not everything is sent (" + nrBytes + '/' + message.length();
-        errorMessage += " bytes sent)";
-        perror(errorMessage.c_str());
-    }*/
-
     return returnValue;
 }
 
@@ -130,4 +122,4 @@ bool Client::WaitForAck()
         //should throw error, will return false for now
         return false;
     }
-}
+}*/

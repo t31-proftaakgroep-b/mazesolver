@@ -7,8 +7,8 @@ static void showMenu( void )
   std::cout << ("\n\nScanner menu\n");
   std::cout << ("===============\n");
   std::cout << ("(1) Scan Maze\n");
-  std::cout << ("(2) Disconnect\n");
-  std::cout << ("(3) Exit\n");
+  //std::cout << ("(2) Disconnect\n");
+  std::cout << ("(2) Exit\n");
   std::cout << ("Choice : ");
 }
 
@@ -29,17 +29,15 @@ int main(void)
     switch (choice)
     {
       case '1':
-      {
-        scanner.ScanMaze();
-      }
+      scanner.ScanMaze();
       break;
 
-      case '2':
+      /*case '2':
       scanner.Disconnect();  
       //connect = 0;
-      break;
+      break;*/
 
-      case '3':
+      case '2':
       scanner.Disconnect();
       quit = true;
       break;

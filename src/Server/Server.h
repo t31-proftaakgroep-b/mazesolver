@@ -2,6 +2,7 @@
 #define SERVER_H
 
 #include "../Protocol.h"
+#include "../communication/Communication.h"
 
 #include <algorithm>  
 #include <arpa/inet.h>
@@ -18,7 +19,8 @@ class Server
 {  
     public:
     Server();
-    
+    ~Server();
+    //Something needs to be done with Communication class here or in client?
     //bool HandleMessage(int fd, std::string message);
     std::string ReceiveMessage(int fd);
     bool AcceptConnection();
@@ -28,9 +30,10 @@ class Server
 
     private:
     //SendMessage(std::string message);
+    Communication* communication;
     int socketFd;   // ------v
     int connectFd;  // these 2 needs to be changed. We shoud've created theses in the main and used them as parameters and returns instead of global variable
-    const std::string FileLocation;
+    const std::string FileLocation = "/tmp/server";
     fd_set readFds;
     std::vector<int> fileDescriptors;
 
@@ -40,6 +43,7 @@ class Server
     std::string ReceiveMessage();
     void SendMessage(int fd, const std::string &message);
     bool WaitForAck();
+
 };
 
 #endif

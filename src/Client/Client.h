@@ -17,17 +17,17 @@
 class Client
 {
     public:
-    Client(std::string Address);
+    Client();
     ~Client();
-    bool Disconnect();
-    bool InitialiseSocket(std::string address);
-    std::string ReceiveMessage();
-    bool ReceiveMessage(std::string& receivedMessage);
-    bool SendMessage(std::string message);
+    //bool Disconnect();
+    //bool InitialiseSocket(std::string address);
+    //std::string ReceiveMessage();
+    //bool ReceiveMessage(std::string& receivedMessage);
+    //bool SendMessage(std::string message);
 
     private:
-    bool WaitForAck();
-    std::string Address;
+    //bool WaitForAck();
+    //std::string Address;
 
     int connectFd;
     int socketFd;

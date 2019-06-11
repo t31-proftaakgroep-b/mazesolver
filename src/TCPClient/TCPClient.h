@@ -18,21 +18,26 @@
 class TCPClient
 {  
     public:
-        TCPClient();
+        TCPClient(std::string address);
         ~TCPClient();
     
-        void Connect();
-        void Disconnect();
+        bool Connect(std::string address);
+        bool Disconnect();
         void SendCurrentState();
         std::string ReceiveMessage();
         bool SendMessage(std::string message);
+        bool WaitForAck();
 
         ClientState GetClientState() const;
         void SetClientState(ClientState status);
     
     private:
+        std::string EnumToString(ClientState state);
+
         ClientState state;
         int socketFd;
+        int connectFd;
+
 };
 
 

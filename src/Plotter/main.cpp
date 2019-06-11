@@ -7,8 +7,8 @@ static void showMenu( void )
   std::cout << ("\n\nPlotter menu\n");
   std::cout << ("===============\n");
   std::cout << ("(1) Plot Maze\n");
-  std::cout << ("(2) Disconnect\n");
-  std::cout << ("(3) Exit\n");
+  //std::cout << ("(2) Disconnect\n");
+  std::cout << ("(2) Exit\n");
   std::cout << ("Choice : ");
 }
 
@@ -34,12 +34,12 @@ int main(void)
       }
       break;
 
-      case '2':
+      /*case '2':
       plotter.Disconnect();  
       //connect = 0;
-      break;
+      break;*/
 
-      case '3':
+      case '2':
       plotter.Disconnect();
       quit = true;
       break;

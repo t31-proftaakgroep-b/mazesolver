@@ -1,6 +1,6 @@
 #include "plotter.h"
 
-Plotter::Plotter():client("127.0.0.1")
+Plotter::Plotter():tcpClient("127.0.0.1")
 {
 
 }
@@ -12,11 +12,12 @@ Plotter::~Plotter()
 
 void Plotter::Disconnect()
 {
-    client.Disconnect();
+    tcpClient.Disconnect();
 }
 
 void Plotter::PrintSolution()
 {
+    tcpClient.SendMessage("Maze has been plotted \n");
     std::cout << "Maze has been plotted" << std::endl;
 }
 

@@ -26,7 +26,7 @@ class Plotter
         void PrintSolution();
     
     private:
-        Client client;
+        //Client client;
         TCPClient tcpClient;
 };
 

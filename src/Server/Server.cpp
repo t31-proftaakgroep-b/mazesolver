@@ -1,9 +1,15 @@
 #include "Server.h"
 
-Server::Server() :
-FileLocation("/tmp/server")
+Server::Server() 
 {
     InitialiseSocket();
+    communication = new Communication(socketFd);
+}
+
+Server::~Server()
+{
+    delete communication;
+    communication = NULL;
 }
 
 void Server::InitialiseSocket()
@@ -65,7 +71,6 @@ std::string Server::ReceiveMessage(int fd)
     return "";
 }
 
-
 void Server::SendMessage(int fd, const std::string &message)
 {
     size_t nrBytes = 0;
@@ -73,7 +78,6 @@ void Server::SendMessage(int fd, const std::string &message)
     {
         nrBytes = send(socketFd, message.c_str(), message.length(), 0);
     }
-
 }
 
 std::string Server::ReceiveMessage()
@@ -164,4 +168,3 @@ int Server::CheckSocket()
     }
     return 0;
 }
-
