@@ -1,5 +1,4 @@
-#ifndef ICOMMUNICATION_H
-#define ICOMMUNICATION_H
+#pragma once
 
 #include <string>
 #include "../Client/Client.h"
@@ -8,9 +7,7 @@ class ICommunication
 {
     public:
     virtual ~ICommunication(){};
-    virtual void SendMessage(std::string message) = 0;
+    virtual bool SendMessage(std::string message) = 0;
     virtual std::string ReceiveMessage() = 0;
-    virtual Client WaitForClient() = 0;
+    virtual int WaitForClient() = 0;
 };
-
-#endif

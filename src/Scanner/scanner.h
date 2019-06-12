@@ -1,5 +1,4 @@
-#ifndef SCANNER_H
-#define SCANNER_H
+#pragma once
 
 #include "../Client/Client.h"
 #include "../TCPClient/TCPClient.h"
@@ -15,7 +14,6 @@
 #include <unistd.h>
 #include <vector>
 
-
 class Scanner
 {
     public:
@@ -24,14 +22,12 @@ class Scanner
 
         void Disconnect();
         ClientState GetState();
-        void ScanMaze();
+        void HandleMessage();
         bool Save(int fileSize);
+        void ScanMaze();
         void SendFile(std::string fileName);
 
     private:
-        //Client client;
         TCPClient tcpClient;
 
 };
-
-#endif

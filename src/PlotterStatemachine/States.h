@@ -1,5 +1,4 @@
-#ifndef STATES_H
-#define STATES_H
+#pragma once
 
 enum State
 {
@@ -13,5 +12,3 @@ enum Calibrated_State
     IDLE,
     BUSY,
 };
-
-#endif

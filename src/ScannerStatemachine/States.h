@@ -1,5 +1,4 @@
-#ifndef STATES_H
-#define STATES_H
+#pragma once
 
 enum State
 {
@@ -14,5 +13,3 @@ enum Calibrated_State
     BUSY,
     SENDINGSOLUTION
 };
-
-#endif

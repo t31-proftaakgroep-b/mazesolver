@@ -1,5 +1,4 @@
-#ifndef BRICKTYPE_H
-#define BRICKTYPE_H
+#pragma once
 
 enum Bricktype
 {
@@ -9,4 +8,3 @@ enum Bricktype
     Scanner
 };
 
-#endif

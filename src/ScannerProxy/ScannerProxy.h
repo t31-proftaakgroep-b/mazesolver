@@ -1,13 +1,14 @@
-#ifndef SCANNERPROXY_H
-#define SCANNERPROXY_H
+#pragma once
+
+#include "../Client/Client.h"
 
 #include <stdint.h>
 #include <string>
 
-class ScannerProxy
+class ScannerProxy:Client
 {
     public:
-        ScannerProxy();
+        ScannerProxy(ICommunication* communication);
         void ScanMaze();
         bool Save(int fileSize);
         void SendFile(std::string fileName);
@@ -15,5 +16,3 @@ class ScannerProxy
     private:
 
 };
-
-#endif

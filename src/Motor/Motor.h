@@ -1,5 +1,4 @@
-#ifndef MOTOR_H
-#define MOTOR_H
+#pragma once
 
 #include "../Interfaces/IMotor.h"
 
@@ -12,12 +11,12 @@ class Motor
         Motor(std::string port, Point maxDistance);
         ~Motor();
 
-        void MotorOn();
-        void MotorOff();
         void Calibrate(Point position);
         std::string GetAddress() const;
-        void SetDirection(Direction newDirection);
         Direction GetDirection() const;
+        void MotorOn();
+        void MotorOff();
+        void SetDirection(Direction newDirection);
         void ToPosition(Point newPosition);
     
     private:
@@ -27,5 +26,3 @@ class Motor
         std::string address;
 
 };
-
-#endif

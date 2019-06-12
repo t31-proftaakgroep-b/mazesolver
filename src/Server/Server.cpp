@@ -1,9 +1,9 @@
 #include "Server.h"
 
-Server::Server() 
+Server::Server()
 {
-    InitialiseSocket();
     communication = new Communication(socketFd);
+    communication->InitialiseSocket();
 }
 
 Server::~Server()
@@ -12,159 +12,59 @@ Server::~Server()
     communication = NULL;
 }
 
-void Server::InitialiseSocket()
+int Server::GetNumberOfConnectedClients()
 {
-    socketFd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
-    if (socketFd < 0)
-    {
-        //TODO uitzoeken/vragen wat we hiermee moeten
-        throw std::bad_exception();
-    }   
-
-    struct sockaddr_in sa;
-    memset(&sa, 0, sizeof sa);
-    sa.sin_family = AF_INET;
-    sa.sin_port = htons(PortNumber);
-    sa.sin_addr.s_addr = htonl(INADDR_ANY);
-    if (bind(socketFd, (struct sockaddr*)&sa, sizeof sa) < 0)
-    {
-        perror("bind failed");
-        close(socketFd);
-        exit(EXIT_FAILURE);
-    }
-
-    if (listen(socketFd, 10) < 0)
-    {
-        perror("listen failed");
-        close(socketFd);
-        exit(EXIT_FAILURE);
-    }
-
-    fileDescriptors.push_back(socketFd);
-    
-    //return connectFd;
+    return communication->GetNumberOfClients();
 }
 
-std::string Server::ReceiveMessage(int fd)
+void Server::Heartbeat()
 {
-    char buffer[BufferSize];
-    int nrBytes = read(fd, buffer, BufferSize - 1);
-    if (nrBytes > 0)
+    //std::cout << "nrSockets: " << nrSockets << std::endl;
+    std::cout << "connected clients: " << GetNumberOfConnectedClients() << std::endl;
+    int nrSockets = communication->WaitForClient();
+    if (nrSockets < 0) // error situation
     {
-        buffer[nrBytes] = '\0';      
-        return buffer;
+        perror("error from calling socket");
+    }
+    else if (nrSockets == 0) // timeout
+    {
+        std::cout << "still listening\n";
+    }
+    else if (nrSockets > 0)
+    {
+        std::cout << "going to connect" << std::endl;
+        communication->AcceptConnection();
     }
 
-    else if (nrBytes == 0)
+    if (GetNumberOfConnectedClients() > 0)
     {
-        //return "CLOSED";
-        //throw std::invalid_argument("Connection closed");
-        fileDescriptors.erase(std::find(std::begin(fileDescriptors), std::end(fileDescriptors), fd));
+        std::string message = "";
+        int activeSocketFd = communication->CheckSocket();
+        if (activeSocketFd > 0)
+        {
+            try
+            {
+                message = communication->ReceiveMessage(activeSocketFd);
+            }
+            catch (const std::exception &e)
+            {
+                std::cerr << e.what() << '\n';
+                //break;
+            }
 
+            if (!message.empty())
+            {
+                std::cout << message;
+            }
+        }
     }
-
-    else if (nrBytes == -1)
-    {
-        //TODO: Throw exception
-    }
-    
-    return "";
 }
 
 void Server::SendMessage(int fd, const std::string &message)
 {
     size_t nrBytes = 0;
-    while(nrBytes != message.length())
+    while (nrBytes != message.length())
     {
         nrBytes = send(socketFd, message.c_str(), message.length(), 0);
     }
-}
-
-std::string Server::ReceiveMessage()
-{
-    char buffer[BufferSize];
-    int nrBytes = read(socketFd, buffer, BufferSize - 1);
-    if (nrBytes >= 0)
-    {
-        buffer[nrBytes] = '\0';
-        return buffer;
-    }
-
-    return "error occured";
-}
-
-bool Server::WaitForAck()
-{
-    std::string receivedMessage = ReceiveMessage();
-
-    if(receivedMessage == AckMessage)
-    {
-        return true;
-    }
-    else if(receivedMessage == NackMessage)
-    {
-        return false;
-    }
-    else
-    {
-        //should throw error, will return false for now
-        return false;
-    }
-}
-
-bool Server::AcceptConnection()
-{
-    int newFd = accept(socketFd, NULL, NULL);
-    if (newFd < 0)
-    {
-        perror("accept failed");
-        close(newFd);
-    }
-    else
-    {
-        fileDescriptors.push_back(newFd);
-    }
-    return true;
-}
-
-int Server::checkConnection()
-{
-    int returnval = CheckSocket();
-    if (returnval != socketFd)
-    {
-        returnval = 0;
-    }
-    return returnval;
-}
-
-int Server::GetNumberOfConnectedClients()
-{
-    return fileDescriptors.size() -1;
-}
-
-int Server::CheckSocket()
-{
-    timeout.tv_sec = SelectTimeout;
-    timeout.tv_usec = 0;
-
-    FD_ZERO(&readFds);
-    
-    for(unsigned int i = 0; i < fileDescriptors.size(); i++)
-    {
-        FD_SET(fileDescriptors[i], &readFds);
-    }
-
-    if (select(FD_SETSIZE, &readFds, NULL, NULL, &timeout) > 0)
-    {
-        for(unsigned int i = 0; i < fileDescriptors.size(); i++)
-        {
-            int set = FD_ISSET(fileDescriptors[i], &readFds);
-            if(set > 0)
-            {
-                return fileDescriptors[i];
-            }
-        }
-        //returnval = FD_ISSET(fd, &readFds);
-    }
-    return 0;
 }

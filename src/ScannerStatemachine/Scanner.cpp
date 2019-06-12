@@ -8,23 +8,21 @@ Scanner::Scanner()
 {
 }
 
-void Scanner::HandleEvent(Event ev)
+Calibrated_State Scanner::HandleBusyState(Event ev)
 {
-    switch (currentState)
+    Calibrated_State result = BUSY;
+
+    switch (ev)
     {
-    case UNINITIALIZED:
-        currentState = HandleUninitializedState(ev);
+    case workDone:
+        BusyExitActions();
+        result = SENDINGSOLUTION;
+        SendingSolutionEntryActions();
         break;
-    case CALIBRATING:
-    	currentState = HandleCalibratingState(ev);
-    	break;
-    case CALIBRATED:
-    	currentState = HandleCalibratedState(ev);
-    	break;
     default:
-        std::cerr << "ERROR: illegal/unhandled state with number: " << currentState;
         break;
-    };
+    }
+    return result;
 }
 
 void Scanner::HandleCalibratedEvent(Event ev)
@@ -46,16 +44,16 @@ void Scanner::HandleCalibratedEvent(Event ev)
     }
 }
 
-State Scanner::HandleUninitializedState(Event ev)
+State Scanner::HandleCalibratedState(Event ev)
 {
-    State result = UNINITIALIZED;
+    State result = CALIBRATED;
 
     switch (ev)
     {
-        case cmdCalibrate:
-            UninitializedExitActions();
-            result = CALIBRATING;
-            CalibratingEntryActions();
+        case logError:
+            CalibratedExitActions();
+            result = UNINITIALIZED;
+            UninitializedEntryActions();
             break;
         default:
             break;
@@ -81,21 +79,23 @@ State Scanner::HandleCalibratingState(Event ev)
     return result;
 }
 
-State Scanner::HandleCalibratedState(Event ev)
+void Scanner::HandleEvent(Event ev)
 {
-    State result = CALIBRATED;
-
-    switch (ev)
+    switch (currentState)
     {
-        case logError:
-            CalibratedExitActions();
-            result = UNINITIALIZED;
-            UninitializedEntryActions();
-            break;
-        default:
-            break;
-    }
-    return result;
+    case UNINITIALIZED:
+        currentState = HandleUninitializedState(ev);
+        break;
+    case CALIBRATING:
+    	currentState = HandleCalibratingState(ev);
+    	break;
+    case CALIBRATED:
+    	currentState = HandleCalibratedState(ev);
+    	break;
+    default:
+        std::cerr << "ERROR: illegal/unhandled state with number: " << currentState;
+        break;
+    };
 }
 
 Calibrated_State Scanner::HandleIdleState(Event ev)
@@ -108,23 +108,6 @@ Calibrated_State Scanner::HandleIdleState(Event ev)
         IdleExitActions();
         result = BUSY;
         BusyEntryActions();
-        break;
-    default:
-        break;
-    }
-    return result;
-}
-
-Calibrated_State Scanner::HandleBusyState(Event ev)
-{
-    Calibrated_State result = BUSY;
-
-    switch (ev)
-    {
-    case workDone:
-        BusyExitActions();
-        result = SENDINGSOLUTION;
-        SendingSolutionEntryActions();
         break;
     default:
         break;
@@ -149,22 +132,29 @@ Calibrated_State Scanner::HandleSendingSolutionState(Event ev)
     return result;
 }
 
-void Scanner::UninitializedEntryActions()
+State Scanner::HandleUninitializedState(Event ev)
+{
+    State result = UNINITIALIZED;
+
+    switch (ev)
+    {
+        case cmdCalibrate:
+            UninitializedExitActions();
+            result = CALIBRATING;
+            CalibratingEntryActions();
+            break;
+        default:
+            break;
+    }
+    return result;
+}
+
+void Scanner::BusyEntryActions()
 {
 
 }
 
-void Scanner::UninitializedExitActions()
-{
-    
-}
-
-void Scanner::CalibratingEntryActions()
-{
-
-}
-
-void Scanner::CalibratingExitActions()
+void Scanner::BusyExitActions()
 {
 
 }
@@ -179,22 +169,22 @@ void Scanner::CalibratedExitActions()
     
 }
 
+void Scanner::CalibratingEntryActions()
+{
+
+}
+
+void Scanner::CalibratingExitActions()
+{
+
+}
+
 void Scanner::IdleEntryActions()
 {
 
 }
 
 void Scanner::IdleExitActions()
-{
-
-}
-
-void Scanner::BusyEntryActions()
-{
-
-}
-
-void Scanner::BusyExitActions()
 {
 
 }
@@ -207,4 +197,14 @@ void Scanner::SendingSolutionEntryActions()
 void Scanner::SendingSolutionExitActions()
 {
 
+}
+
+void Scanner::UninitializedEntryActions()
+{
+
+}
+
+void Scanner::UninitializedExitActions()
+{
+    
 }

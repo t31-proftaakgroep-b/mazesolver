@@ -7,7 +7,6 @@ static void showMenu( void )
   std::cout << ("\n\nPlotter menu\n");
   std::cout << ("===============\n");
   std::cout << ("(1) Plot Maze\n");
-  //std::cout << ("(2) Disconnect\n");
   std::cout << ("(2) Exit\n");
   std::cout << ("Choice : ");
 }
@@ -15,9 +14,7 @@ static void showMenu( void )
 int main(void)
 {
   Plotter plotter;
-  //int socketFd;
   bool quit = false;
-  //bool connect = 0;
 
   while (!quit)
   {
@@ -33,11 +30,6 @@ int main(void)
         plotter.PrintSolution();
       }
       break;
-
-      /*case '2':
-      plotter.Disconnect();  
-      //connect = 0;
-      break;*/
 
       case '2':
       plotter.Disconnect();

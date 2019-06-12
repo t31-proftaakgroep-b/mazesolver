@@ -7,7 +7,6 @@ static void showMenu( void )
   std::cout << ("\n\nScanner menu\n");
   std::cout << ("===============\n");
   std::cout << ("(1) Scan Maze\n");
-  //std::cout << ("(2) Disconnect\n");
   std::cout << ("(2) Exit\n");
   std::cout << ("Choice : ");
 }
@@ -15,9 +14,7 @@ static void showMenu( void )
 int main(void)
 {
   Scanner scanner;
-  //int socketFd;
   bool quit = false;
-  //bool connect = 0;
 
   while (!quit)
   {
@@ -31,11 +28,6 @@ int main(void)
       case '1':
       scanner.ScanMaze();
       break;
-
-      /*case '2':
-      scanner.Disconnect();  
-      //connect = 0;
-      break;*/
 
       case '2':
       scanner.Disconnect();

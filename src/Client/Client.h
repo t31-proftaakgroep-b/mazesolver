@@ -1,6 +1,6 @@
-#ifndef CLIENT_H
-#define CLIENT_H
+#pragma once
 
+#include "../Interfaces/ICommunication.h"
 #include "../Protocol.h"
 
 #include <arpa/inet.h>
@@ -17,22 +17,13 @@
 class Client
 {
     public:
-    Client();
-    ~Client();
-    //bool Disconnect();
-    //bool InitialiseSocket(std::string address);
-    //std::string ReceiveMessage();
-    //bool ReceiveMessage(std::string& receivedMessage);
-    //bool SendMessage(std::string message);
+        Client(ICommunication& communication);
+        ~Client();
+        virtual void GetCurrentState() = 0;
 
     private:
-    //bool WaitForAck();
-    //std::string Address;
-
-    int connectFd;
-    int socketFd;
+        ICommunication& communication;
+        int connectFd;
+        int socketFd;
 
 };
-    
-
-#endif

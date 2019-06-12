@@ -1,17 +1,17 @@
-#ifndef PLOTTERPROXY_H
-#define PLOTTERPROXY_H
+#pragma once
+
+#include "../Client/Client.h"
 
 #include <stdint.h>
 #include <string>
 
-class PlotterProxy
+class PlotterProxy : Client
 {
     public:
-        PlotterProxy();
+        PlotterProxy(ICommunication* communication);
+        void GetState();
         void PrintSolution();
         
     private:
         void ReceiveSolution();
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef TCPCLIENT_H
-#define TCPCLIENT_H
+#pragma once
 
 #include <arpa/inet.h>
 #include <cstdio>
@@ -23,22 +22,17 @@ class TCPClient
     
         bool Connect(std::string address);
         bool Disconnect();
-        void SendCurrentState();
-        std::string ReceiveMessage();
-        bool SendMessage(std::string message);
-        bool WaitForAck();
-
         ClientState GetClientState() const;
+        std::string ReceiveMessage();
         void SetClientState(ClientState status);
+        void SendCurrentState();
+        bool SendMessage(std::string message);
+        bool WaitForAck();    
     
     private:
         std::string EnumToString(ClientState state);
-
         ClientState state;
         int socketFd;
         int connectFd;
 
 };
-
-
-#endif

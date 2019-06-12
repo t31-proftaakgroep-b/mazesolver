@@ -1,35 +1,33 @@
-#ifndef PLOTTER_H
-#define PLOTTER_H
+#pragma once
 
 #include "Events.h"
 #include "States.h"
-
+#include <iostream>
 
 class Plotter
 {
     public:
         Plotter();
-        void HandleEvent(Event ev);
-        State HandleUninitializedState(Event ev);
-        State HandleCalibratingState(Event ev);
+        Calibrated_State HandleBusyState(Event ev);
+        void HandleCalibratedEvent(Event ev);
         State HandleCalibratedState(Event ev);
-        void HandleCalibratedEvent (Event ev);
+        State HandleCalibratingState(Event ev);
+        void HandleEvent(Event ev);
         Calibrated_State HandleIdleState(Event ev);
-        Calibrated_State HandleBusyState(Event ev); 
+        State HandleUninitializedState(Event ev);         
+         
     private:
         State currentState;
         Calibrated_State currentCalibratedState;
 
-        void UninitializedEntryActions();
-        void UninitializedExitActions();
-        void CalibratingEntryActions();
-        void CalibratingExitActions();
-        void CalibratedEntryActions();
-        void CalibratedExitActions();
-        void IdleEntryActions();
-        void IdleExitActions();
         void BusyEntryActions();
         void BusyExitActions();
+        void CalibratedEntryActions();
+        void CalibratedExitActions();
+        void CalibratingEntryActions();
+        void CalibratingExitActions();
+        void IdleEntryActions();
+        void IdleExitActions();
+        void UninitializedEntryActions();
+        void UninitializedExitActions();        
 };
-
-#endif

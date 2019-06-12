@@ -1,5 +1,4 @@
-#ifndef SENSOR_H
-#define SENSOR_H
+#pragma once
 
 #include <stdint.h>
 #include <string>
@@ -12,5 +11,3 @@ class Sensor
     private:
 
 };
-
-#endif

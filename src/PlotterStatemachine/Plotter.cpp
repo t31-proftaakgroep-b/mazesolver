@@ -1,30 +1,26 @@
 #include "Plotter.h"
 
-#include <iostream>
-
 Plotter::Plotter()
     : currentState(UNINITIALIZED)
     , currentCalibratedState(IDLE)
 {
 }
 
-void Plotter::HandleEvent(Event ev)
+Calibrated_State Plotter::HandleBusyState(Event ev)
 {
-    switch (currentState)
+    Calibrated_State result = BUSY;
+
+    switch (ev)
     {
-    case UNINITIALIZED:
-        currentState = HandleUninitializedState(ev);
+    case workDone:
+        BusyExitActions();
+        result = IDLE;
+        IdleEntryActions();
         break;
-    case CALIBRATING:
-    	currentState = HandleCalibratingState(ev);
-    	break;
-    case CALIBRATED:
-    	currentState = HandleCalibratedState(ev);
-    	break;
     default:
-        std::cerr << "ERROR: illegal/unhandled state with number: " << currentState;
         break;
-    };
+    }
+    return result;
 }
 
 void Plotter::HandleCalibratedEvent(Event ev)
@@ -43,16 +39,16 @@ void Plotter::HandleCalibratedEvent(Event ev)
     }
 }
 
-State Plotter::HandleUninitializedState(Event ev)
+State Plotter::HandleCalibratedState(Event ev)
 {
-    State result = UNINITIALIZED;
+    State result = CALIBRATED;
 
     switch (ev)
     {
-        case cmdCalibrate:
-            UninitializedExitActions();
-            result = CALIBRATING;
-            CalibratingEntryActions();
+        case logError:
+            CalibratedExitActions();
+            result = UNINITIALIZED;
+            UninitializedEntryActions();
             break;
         default:
             break;
@@ -78,21 +74,23 @@ State Plotter::HandleCalibratingState(Event ev)
     return result;
 }
 
-State Plotter::HandleCalibratedState(Event ev)
+void Plotter::HandleEvent(Event ev)
 {
-    State result = CALIBRATED;
-
-    switch (ev)
+    switch (currentState)
     {
-        case logError:
-            CalibratedExitActions();
-            result = UNINITIALIZED;
-            UninitializedEntryActions();
-            break;
-        default:
-            break;
-    }
-    return result;
+    case UNINITIALIZED:
+        currentState = HandleUninitializedState(ev);
+        break;
+    case CALIBRATING:
+    	currentState = HandleCalibratingState(ev);
+    	break;
+    case CALIBRATED:
+    	currentState = HandleCalibratedState(ev);
+    	break;
+    default:
+        std::cerr << "ERROR: illegal/unhandled state with number: " << currentState;
+        break;
+    };
 }
 
 Calibrated_State Plotter::HandleIdleState(Event ev)
@@ -112,39 +110,29 @@ Calibrated_State Plotter::HandleIdleState(Event ev)
     return result;
 }
 
-Calibrated_State Plotter::HandleBusyState(Event ev)
+State Plotter::HandleUninitializedState(Event ev)
 {
-    Calibrated_State result = BUSY;
+    State result = UNINITIALIZED;
 
     switch (ev)
     {
-    case workDone:
-        BusyExitActions();
-        result = IDLE;
-        IdleEntryActions();
-        break;
-    default:
-        break;
+        case cmdCalibrate:
+            UninitializedExitActions();
+            result = CALIBRATING;
+            CalibratingEntryActions();
+            break;
+        default:
+            break;
     }
     return result;
 }
 
-void Plotter::UninitializedEntryActions()
+void Plotter::BusyEntryActions()
 {
 
 }
 
-void Plotter::UninitializedExitActions()
-{
-    
-}
-
-void Plotter::CalibratingEntryActions()
-{
-
-}
-
-void Plotter::CalibratingExitActions()
+void Plotter::BusyExitActions()
 {
 
 }
@@ -159,6 +147,16 @@ void Plotter::CalibratedExitActions()
     
 }
 
+void Plotter::CalibratingEntryActions()
+{
+
+}
+
+void Plotter::CalibratingExitActions()
+{
+
+}
+
 void Plotter::IdleEntryActions()
 {
 
@@ -169,12 +167,12 @@ void Plotter::IdleExitActions()
 
 }
 
-void Plotter::BusyEntryActions()
+void Plotter::UninitializedEntryActions()
 {
 
 }
 
-void Plotter::BusyExitActions()
+void Plotter::UninitializedExitActions()
 {
-
+    
 }

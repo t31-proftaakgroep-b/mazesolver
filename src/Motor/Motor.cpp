@@ -10,14 +10,19 @@ Motor::~Motor()
     
 }
 
-Direction Motor::GetDirection() const
+void Motor::Calibrate(Point position)
 {
-    return direction;
+
 }
 
 std::string Motor::GetAddress() const
 {
     return address;
+}
+
+Direction Motor::GetDirection() const
+{
+    return direction;
 }
 
 void Motor::MotorOn()
@@ -26,11 +31,6 @@ void Motor::MotorOn()
 }
 
 void Motor::MotorOff()
-{
-
-}
-
-void Motor::Calibrate(Point position)
 {
 
 }

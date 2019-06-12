@@ -1,5 +1,4 @@
-#ifndef PLOTTER_H
-#define PLOTTER_H
+#pragma once
 
 #include "../Protocol.h"
 #include "../ClientState.h"
@@ -23,11 +22,11 @@ class Plotter
     
         void Disconnect();
         ClientState GetState();
+        void HandleMessage();
         void PrintSolution();
     
     private:
-        //Client client;
         TCPClient tcpClient;
-};
+        void ReceiveSolution();
 
-#endif
+};

@@ -1,5 +1,4 @@
-#ifndef CLIENTSTATE_H
-#define CLIENTSTATE_H
+#pragma once
 
 enum ClientState
 {
@@ -8,4 +7,3 @@ enum ClientState
     Done
 };
 
-#endif

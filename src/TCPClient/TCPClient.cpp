@@ -63,10 +63,9 @@ bool TCPClient::Disconnect()
     return true;
 }
         
-void TCPClient::SendCurrentState()
+ClientState TCPClient::GetClientState() const
 {
-    std::string messageToSend = EnumToString(state);
-    SendMessage(messageToSend);
+    return state;
 }
 
 std::string TCPClient::ReceiveMessage()
@@ -82,6 +81,16 @@ std::string TCPClient::ReceiveMessage()
     return "error occured";   
 }
 
+void TCPClient::SendCurrentState()
+{
+    std::string messageToSend = EnumToString(state);
+    SendMessage(messageToSend);
+}
+
+void TCPClient::SetClientState(ClientState status)
+{
+    state = status;
+}
 
 bool TCPClient::SendMessage(std::string message)
 {
@@ -94,16 +103,6 @@ bool TCPClient::SendMessage(std::string message)
     //returnValue = WaitForAck();
 
     return returnValue;
-}
-
-ClientState TCPClient::GetClientState() const
-{
-    return state;
-}
-
-void TCPClient::SetClientState(ClientState status)
-{
-    state = status;
 }
 
 bool TCPClient::WaitForAck()

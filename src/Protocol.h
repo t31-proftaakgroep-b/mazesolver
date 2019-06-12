@@ -1,5 +1,4 @@
-#ifndef PROTOCOL_H
-#define PROTOCOL_H
+#pragma once
 
 #include <stdint.h>
 #include <string>
@@ -9,4 +8,11 @@ const std::string AckMessage = "ACK";
 const std::string NackMessage = "NACK";
 const int BufferSize = 100;
 
-#endif
+const std::string PlotterGetState = "GET STATE";
+const std::string PlotterPrintSolution = "PRINT SOLUTION";
+const std::string PlotterReceiveSolution = "RECEIVE SOLUTION";
+
+const std::string ScannerScanMaze = "SCAN MAZE";
+const std::string ScannerSave = "SAVE FILE";
+const std::string ScannerSendFile = "SEND FILE";
+

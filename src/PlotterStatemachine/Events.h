@@ -1,5 +1,4 @@
-#ifndef EVENTS_H
-#define EVENTS_H
+#pragma once
 
 enum Event
 {
@@ -10,4 +9,3 @@ enum Event
     logError
 };
 
-#endif

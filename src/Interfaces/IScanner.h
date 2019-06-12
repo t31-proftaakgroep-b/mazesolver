@@ -1,5 +1,4 @@
-#ifndef ISCANNER_H
-#define ISCANNER_H
+#pragma once
 
 class IScanner
 {
@@ -7,5 +6,4 @@ class IScanner
     virtual int ReadValue();
 };
 
-#endif
 

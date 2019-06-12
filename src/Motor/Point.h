@@ -1,10 +1,7 @@
-#ifndef POINT_H
-#define POINT_H
+#pragma once
 
 struct Point
 {
     int X;
     int Y;
 };
-
-#endif
