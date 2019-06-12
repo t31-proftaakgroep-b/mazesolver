@@ -6,15 +6,23 @@ MOTOR_SOURCES=*.cpp
 TEST_LIBS=
 #-lgtest -lgtest_main -pthread
 
-GCC=arm-linux-gnueabi-g++
+GCC=g++
+GCC_arm=arm-linux-gnueabi-g++
 
-all: $(PRODUCT)
+all: printer_arm upload
 
 
 printer: $(MOTOR_SOURCES) Makefile *.h
 	@$(GCC) $(CFLAGS) $(MOTOR_SOURCES) $(TEST_LIBS) -o $@
-	scp $(PRODUCT) dev:/home/robot/printer
-	ssh dev './printer'
+
+printer_arm: $(MOTOR_SOURCES) Makefile *.h
+	@$(GCC_arm) $(CFLAGS) $(MOTOR_SOURCES) $(TEST_LIBS) -o $(PRODUCT)
+
+upload:
+	scp $(PRODUCT) dev:/home/robot/$(PRODUCT)
+	ssh dev './$(PRODUCT)'
 	
-clean:	rm $(PRODUCT)
+clean:
+	rm $(PRODUCT)
+	ssh dev 'rm -rf ./$(PRODUCT)'
 

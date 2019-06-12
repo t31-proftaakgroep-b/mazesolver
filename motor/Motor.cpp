@@ -97,7 +97,7 @@ void Motor::goToMax()
 	
 void Motor::setSpeed(int newSpeed)
 {
-	writeToFile("/duty_cycle_sp",newSpeed);
+	writeToFile("/speed_sp",newSpeed);
 }
 
 void Motor::readFromFile(std::string folder, int* returnValue)
@@ -137,35 +137,25 @@ std::string Motor::findMotorPath(std::string port)
 {
 	std::ifstream myFile;
 	std::string motorClassFilePath = "/sys/class/tacho-motor/motor";
-	std::string portNamePath = "/port_name";
-	std::string foundMotorPath ="";
-	bool pathFound = false;
+	//std::string portNamePath = "/port_name";
+	//std::string foundMotorPath ="";
+	//bool pathFound = false;
 
-	for (int i = 0 ; i <= maxMotorFiles && !pathFound ;i++)
-	{	
-		std::stringstream MotorPath;
-		std::stringstream PortPath;
-
-		MotorPath << motorClassFilePath << i ;
-		PortPath << MotorPath.str() << portNamePath;
-		
-		std::string stringPortPath = PortPath.str();
-		
-		myFile.open(stringPortPath.c_str());
-		if (myFile)
-		{
-			std::string filePort;
-			std::getline(myFile,filePort);
-			if (filePort == port)
-			{
-				foundMotorPath = MotorPath.str();
-				pathFound = true;
-			}
-		}
-		myFile.close();
+	if(port == "outA")
+	{
+		motorClassFilePath += '0';
+	}
+	else if(port == "outB")
+	{
+		motorClassFilePath += '1';
+	}
+	else if (port == "outC")
+	{
+		motorClassFilePath += '3';
 	}
 	
-	return foundMotorPath;
+	
+	return motorClassFilePath;
 }
 
 int Motor::getMaxDistance()
