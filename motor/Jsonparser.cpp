@@ -5,9 +5,9 @@
 #include <vector>
 #include <string>
 
-Jsonparser::Jsonparser(std::vector<std::string>Commands)
+Jsonparser::Jsonparser(std::vector<std::string>commands)
 {
-
+    Commands = commands;
 }
 
 void Jsonparser::getCommands(std::vector<std::string>ReceivedCommands)

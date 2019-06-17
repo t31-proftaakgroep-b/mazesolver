@@ -44,7 +44,7 @@ int main()
     Motor* MotorX = new Motor("outB", 10000, 'X');	
 	Motor* MotorZ = new Motor("outC", 2000, 'Z');
 
-    std::vector<std::string>Commands;
+    //std::vector<std::string>Commands{"Down: 2", "Right: 3"};
     
     MotorX->setSpeed(speed);
     MotorX->resetPosition();
@@ -58,7 +58,7 @@ int main()
     MotorZ->resetPosition();
     MotorZ->goToMax();
 
-    Jsonparser* parser = new Jsonparser(Commands);
+    Jsonparser* parser = new Jsonparser({"Down: 2", "Right: 3"});
 
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
     while(true)
@@ -87,36 +87,44 @@ int main()
             
             if(breakX == true && breakY == true)
             {
+
                 MotorZ->stopMotor();
-                //Calibrated = true;
+                Calibrated = true;
+                std::cout<<"Helloo"<<std::endl;
                 break;
             }
         }   
         
     }
 
-    while (parser->DoneParsing() == false)
+    while (1)
     {
+        std::cout<<"Doneparsing while loop"<<std::endl;
+
         std::string command = parser->getNextCommand();
         if (command.find("Up"))
         {
+            std::cout<<"hello i am up"<<std::endl;
             int distance = getDistance(command);
-            MotorY->moveToPosition(distance);
+            MotorY->moveToPosition(distance*500);
         }
         else if (command.find("Down"))
         {
+            std::cout<<"hello i am down"<<std::endl;
             int distance = getDistance(command);
-            MotorY->moveToPosition(distance);
+            MotorY->moveToPosition(distance*500);
         }
         else if (command.find("Left"))
         {
+            std::cout<<"hello i am left"<<std::endl;
             int distance = getDistance(command);
-            MotorX->moveToPosition(distance);
+            MotorX->moveToPosition(distance*500);
         }
         else if (command.find("Right"))
         {
+            std::cout<<"hello i am right"<<std::endl;
             int distance = getDistance(command);
-            MotorX->moveToPosition(distance);
+            MotorX->moveToPosition(distance*500);
         }
     }
     
