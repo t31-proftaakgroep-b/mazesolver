@@ -1,4 +1,5 @@
 #include "Motor.h"
+#include "Jsonparser.h"
 
 #include <string>
 #include <vector>
@@ -8,7 +9,7 @@
 #include <sstream>
 #include <cstring>
 #include <stdbool.h>
-#include <stdio.h>
+#include <stdio.h> 
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -18,11 +19,19 @@
 #include <chrono>
 #include <thread>
 
+int getDistance(std::string command)
+{
+    std::size_t pos = command.find(" ");
+    std::string distancestring = command.substr(pos + 1);
+    return atoi(distancestring.c_str());
+}
+
 int main()
 {
     bool delayed = true;
     bool breakX = false;
     bool breakY = false;
+    bool Calibrated = false;
 
     int speed = 500;
     int speedMinX = speed/100*95;
@@ -33,7 +42,9 @@ int main()
 
     Motor* MotorY = new Motor("outA", 10000, 'Y');
     Motor* MotorX = new Motor("outB", 10000, 'X');	
-	// Motor* MotorZ = new Motor("outC", 1000, 'Z');
+	Motor* MotorZ = new Motor("outC", 2000, 'Z');
+
+    std::vector<std::string>Commands;
     
     MotorX->setSpeed(speed);
     MotorX->resetPosition();
@@ -43,39 +54,77 @@ int main()
     MotorY->resetPosition();
     MotorY->goToMax();
 
+    MotorZ->setSpeed(speed);
+    MotorZ->resetPosition();
+    MotorZ->goToMax();
+
+    Jsonparser* parser = new Jsonparser(Commands);
+
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
     while(true)
     {
-        if(MotorX->getSpeed() < speedMinX || MotorX->getSpeed() > speedMaxX)
+        if (Calibrated == false)
         {
-            //std::cout << MotorX->getSpeed() << std::endl;
-            MotorX->stopMotor();
-            breakX = true;
-        }
-        
-        if(delayed == true)
-        {
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-            delayed = false;
-        }
+            if(MotorX->getSpeed() < speedMinX || MotorX->getSpeed() > speedMaxX)
+            {
+                //std::cout << MotorX->getSpeed() << std::endl;
+                MotorX->stopMotor();
+                breakX = true;
+            }
+            
+            if(delayed == true)
+            {
+                std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+                delayed = false;
+            }
 
-        if((MotorY->getSpeed() < speedMinY || MotorY->getSpeed() > speedMaxY))
-        {
-            //std::cout << MotorY->getSpeed() << std::endl;
-            MotorY->stopMotor();
-            breakY = true;
-        }
+            if((MotorY->getSpeed() < speedMinY || MotorY->getSpeed() > speedMaxY))
+            {
+                //std::cout << MotorY->getSpeed() << std::endl;
+                MotorY->stopMotor();
+                breakY = true;
+            }
+            
+            if(breakX == true && breakY == true)
+            {
+                MotorZ->stopMotor();
+                //Calibrated = true;
+                break;
+            }
+        }   
         
-        if(breakX == true && breakY == true)
-        {
-            break;
-        }
     }
 
+    while (parser->DoneParsing() == false)
+    {
+        std::string command = parser->getNextCommand();
+        if (command.find("Up"))
+        {
+            int distance = getDistance(command);
+            MotorY->moveToPosition(distance);
+        }
+        else if (command.find("Down"))
+        {
+            int distance = getDistance(command);
+            MotorY->moveToPosition(distance);
+        }
+        else if (command.find("Left"))
+        {
+            int distance = getDistance(command);
+            MotorX->moveToPosition(distance);
+        }
+        else if (command.find("Right"))
+        {
+            int distance = getDistance(command);
+            MotorX->moveToPosition(distance);
+        }
+    }
+    
 	std::cout<<"Motor done"<<std::endl;
-
     return 0;
 }
+
+
 
 /*
 Stappenplan: 

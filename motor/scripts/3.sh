@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "	Host dev
-	HostName 192.168.200.38
+	HostName 192.168.200.34
 	User robot
 
 Host *

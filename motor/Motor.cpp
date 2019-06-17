@@ -151,7 +151,7 @@ std::string Motor::findMotorPath(std::string port)
 	}
 	else if (port == "outC")
 	{
-		motorClassFilePath += '3';
+		motorClassFilePath += '2';
 	}
 	
 	
