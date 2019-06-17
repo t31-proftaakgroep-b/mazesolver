@@ -2,6 +2,8 @@
 
 #include "../Protocol.h"
 #include "../communication/Communication.h"
+#include "../Maze/Maze.h"
+#include "../MazeSolver/MazeSolver.h"
 
 #include <algorithm>  
 #include <arpa/inet.h>
@@ -21,15 +23,24 @@ class Server
         ~Server();
         int GetNumberOfConnectedClients();
         void Heartbeat();
+        void PlotRequest(int number);
+        void RequestMaze();
+        std::string GetMazeVisual(int index);
+        void ScanRequest(int number);
+        void SendMessage(int fd, const std::string &message);
+        void SendSolution(int number);
 
     private:
         Communication* communication;
+        MazeSolver* mazeSolver;
+
         int socketFd;   // ------v
         int connectFd;  // these 2 needs to be changed. We shoud've created theses in the main and used them as parameters and returns instead of global variable
         const std::string FileLocation = "/tmp/server";
 
+        std::vector<Maze> scannedMazes;
+
         //std::string ReceiveMessage();
-        void SendMessage(int fd, const std::string &message);
         //bool WaitForAck();
 
 };

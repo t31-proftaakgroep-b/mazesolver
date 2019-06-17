@@ -2,7 +2,7 @@
 #include <iostream>
 #include <limits> 
 
-static void showMenu( void )
+/*static void showMenu( void )
 {
   std::cout << ("\n\nPlotter menu\n");
   std::cout << ("===============\n");
@@ -42,5 +42,14 @@ int main(void)
     }
   }
   return 0;
-}
+}*/
 
+int main(void)
+{
+  Plotter plotter;
+  while(true)
+  {
+    plotter.HandleMessage();
+  }
+  return 0;
+}

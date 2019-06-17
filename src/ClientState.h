@@ -1,4 +1,5 @@
 #pragma once
+#include<vector>
 
 enum ClientState
 {
@@ -7,3 +8,4 @@ enum ClientState
     Done
 };
 
+const std::vector<std::string> ClientStateString {"Idle", "Busy", "Done"};

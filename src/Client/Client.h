@@ -17,12 +17,13 @@
 class Client
 {
     public:
-        Client(ICommunication& communication);
+        Client(ICommunication* communication);
         ~Client();
+        ICommunication* GetCommunication();
         virtual void GetCurrentState() = 0;
 
     private:
-        ICommunication& communication;
+        ICommunication* communication;
         int connectFd;
         int socketFd;
 

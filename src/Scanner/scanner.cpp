@@ -44,6 +44,7 @@ bool Scanner::Save(int fileSize)
 
 void Scanner::ScanMaze()
 {
+    //Here should the maze been scanned and send a solution 
     std::cout << "Maze has been scanned" << std::endl;
     tcpClient.SendMessage("Send a scanned maze! \n");
 }    

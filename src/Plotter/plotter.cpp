@@ -23,7 +23,7 @@ ClientState Plotter::GetState()
 void Plotter::HandleMessage()
 {
     std::string message = tcpClient.ReceiveMessage();
-    if(message == PlotterGetState)
+    if(message == GetCurrentState)
     {
         GetState();
     }
@@ -39,6 +39,7 @@ void Plotter::HandleMessage()
 
 void Plotter::PrintSolution()
 {
+    //I Believe here must come the package to send to the real plotter to print
     tcpClient.SendMessage("Maze has been plotted \n");
     std::cout << "Maze has been plotted" << std::endl;
 }

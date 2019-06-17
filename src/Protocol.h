@@ -8,7 +8,8 @@ const std::string AckMessage = "ACK";
 const std::string NackMessage = "NACK";
 const int BufferSize = 100;
 
-const std::string PlotterGetState = "GET STATE";
+const std::string GetCurrentState = "GET STATE";
+
 const std::string PlotterPrintSolution = "PRINT SOLUTION";
 const std::string PlotterReceiveSolution = "RECEIVE SOLUTION";
 

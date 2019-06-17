@@ -2,22 +2,28 @@
 
 PlotterProxy::PlotterProxy(ICommunication* communication):Client(communication)
 {
+}
+
+void PlotterProxy::GetCurrentState()
+{
 
 }
 
 void PlotterProxy::GetState()
 {
-    communication.SendMessage(PlotterGetState);
+    //GetCommunication()->SendMessage("Idle");
 }
 
 void PlotterProxy::PrintSolution()
 {
-    communication.SendMessage(PlotterPrintSolution);
+    GetCommunication()->SendMessage(PlotterPrintSolution);
 }
 
 void PlotterProxy::ReceiveSolution()
 {
-    communication.SendMessage(PlotterReceiveSolution);
+    GetCommunication()->SendMessage(PlotterReceiveSolution);
 }
+
+
 
 

@@ -11,13 +11,22 @@ MazeSolver::~MazeSolver()
 Solution MazeSolver::SolveMaze(Maze maze)
 {
     maze = maze;
-    std::vector<Instruction> solutionVector;
-    Solution solution(solution);
-    return solution;
 
+    Instruction instruction = {1, Up};
+
+    std::vector<Instruction> instructionVector;
+    instructionVector.push_back(instruction);
+
+    Solution solution = Solution(instructionVector);
+
+    return solution;
+}
+
+std::vector<MazeField> MazeSolver::GetSolutionFields(Maze maze)
+{
     std::vector<MazeField> fields = maze.GetFields();
     MazeField start;
-    MazeField finish;
+    Direction currentDirection = Up;
 
     int i = 0; //counter
 
@@ -27,28 +36,72 @@ Solution MazeSolver::SolveMaze(Maze maze)
         {
             start = fields[i];
         }
-        else if(fields[i].Type == Finish)
-        {
-            finish = fields[i];
-        }
     }
 
     std::vector<MazeField> currentPath;
-    std::vector<MazeField> previousIntersections;
 
     currentPath.push_back(start);
+
+    bool mazeSolved = false;
+    bool retreading = false;
+    int retreadCounter = 1;
+
+    while(!mazeSolved)
+    {
+        MazeField nextField = NextField(fields, currentPath.back(), currentDirection);
+
+        if(nextField.Type == Finish)
+        {
+            mazeSolved = true;
+        }
+
+        if(retreading)
+        {
+            if(VectorContainsField(nextField, fields))
+            {
+                retreadCounter += 2;
+            }
+            else
+            {
+                //currentPath[currentPath.end - 1].Type = Wall;
+                currentPath.erase(currentPath.end() - retreadCounter, currentPath.end() - 1);
+                retreading = false;
+                retreadCounter = 1;
+            }
+        }
+
+        if(FieldsEqual(nextField, currentPath.end()[-1]))
+        {
+            retreading = true;
+        }
+
+        currentPath.push_back(nextField);
+    }
+
+    return currentPath;
+
+    /*std::vector<MazeField> finalPath;
+    bool deadEndsRemoved;
+    while(!deadEndsRemoved)
+    {
+        MazeField nextField = NextField(fields, finalPath.end, &currentDirection);
+
+        if(nextField.X == finish.X && nextField.Y == finish.Y)
+        {
+            deadEndsRemoved = true;
+        }
+    }*/
+
 }
 
-MazeField MazeSolver::NextField(std::vector<MazeField> fields, MazeField currentField, Direction currentDirection)
+MazeField MazeSolver::NextField(std::vector<MazeField> fields, MazeField currentField, Direction &currentDirection)
 {
-    int i = 0;
-
     MazeField topField;
     MazeField rightField;
     MazeField bottomField;
     MazeField leftField;
 
-    std::vector<MazeField> possibleNextFields;
+    int i = 0;
 
     for(std::vector<MazeField>::iterator it = fields.begin(); it != fields.end(); it++, i++)
     {
@@ -70,17 +123,58 @@ MazeField MazeSolver::NextField(std::vector<MazeField> fields, MazeField current
         }
     }
 
-    MazeField relativeLeft;
-    MazeField relativeForward;
-    MazeField relativeRight;
-    
-    if(FieldDirection(currentDirection, Right) == Right)
+    std::vector<MazeField> possibleNextFields= {topField, rightField, bottomField, leftField};
+  
+    for(int j = 0; j < 4; j++)
     {
+        Direction relativeDirection = Direction(currentDirection + j);
 
+        currentDirection = Direction(j);
+
+        if(relativeDirection == Left)
+        {
+            return possibleNextFields[j];
+        }
+        else if(relativeDirection == Up)
+        {
+            return possibleNextFields[j];
+        }
+        else if(relativeDirection == Right)
+        {
+            return possibleNextFields[j];
+        }
+        else if(relativeDirection == Down)
+        {
+            return possibleNextFields[j];
+        }
     }
+
+    return possibleNextFields[3];
 }
 
-Direction MazeSolver::FieldDirection(Direction currentDirection, Direction nextDirection)
+bool MazeSolver::FieldsEqual(MazeField a, MazeField b)
 {
-    return Direction(currentDirection + nextDirection % 4);
+    if(a.X == b.X && a.Y == b.Y && a.Type == b.Type)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+} 
+
+bool MazeSolver::VectorContainsField(MazeField field, std::vector<MazeField> allFields)
+{
+    int i = 0;
+
+    for(std::vector<MazeField>::iterator it = allFields.begin(); it != allFields.end(); it++, i++)
+    {
+        if(FieldsEqual(allFields[i], field))
+        {
+            return true;
+        }
+    }
+
+    return false;
 }

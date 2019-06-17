@@ -1,5 +1,5 @@
 #include "Communication.h"
-//All need to be implemented 
+
 Communication::Communication(int socketFD)
 {
 	socketFd = socketFD;
