@@ -4,12 +4,15 @@ Server::Server()
 {
     communication = new Communication(socketFd);
     communication->InitialiseSocket();
+    mazeSolver = new MazeSolver();
 }
 
 Server::~Server()
 {
     delete communication;
     communication = NULL;
+    delete mazeSolver;
+    mazeSolver = NULL;
 }
 
 int Server::GetNumberOfConnectedClients()
@@ -130,8 +133,20 @@ void Server::RequestMaze()
 }
 
 std::string Server::GetMazeVisual(int index)
+{  
+    if(scannedMazes.size() > 0)
+    {
+        return scannedMazes[index].GetMazeVisual();
+    }
+    else
+    {
+        return "Maze not found.";
+    }
+}
+
+std::vector<std::string> Server::PrintSolution(int index)
 {
-    return scannedMazes[index].GetMazeVisual();
+    return mazeSolver->SolveMaze(scannedMazes[index]).GetInstructionStrings();
 }
 
 void Server::ScanRequest(int number)

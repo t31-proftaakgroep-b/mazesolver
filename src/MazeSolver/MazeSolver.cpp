@@ -10,21 +10,63 @@ MazeSolver::~MazeSolver()
 
 Solution MazeSolver::SolveMaze(Maze maze)
 {
-    maze = maze;
-
-    Instruction instruction = {1, Up};
-
+    //std::vector<MazeField> solutionFields = GetSolutionFields(maze);
+    std::vector<MazeField> solutionFields;
+    solutionFields.push_back({0, 0, Empty});
+    solutionFields.push_back({0, 1, Empty});
+    solutionFields.push_back({0, 2, Empty});
+    solutionFields.push_back({1, 2, Empty});
     std::vector<Instruction> instructionVector;
-    instructionVector.push_back(instruction);
 
-    Solution solution = Solution(instructionVector);
+    MazeField previousField = solutionFields[0];
+    Direction previousDirection = Up;
+    int straightAmount = 0;
 
-    return solution;
+    for(std::vector<MazeField>::size_type i = 1; i < solutionFields.size(); i++)
+    {
+        Direction newDirection;
+        if(solutionFields[i].X == previousField.X + 1 && solutionFields[i].Y == previousField.Y)
+        {
+            newDirection = Right;
+        }
+        else if(solutionFields[i].X == previousField.X - 1 && solutionFields[i].Y == previousField.Y)
+        {
+            newDirection = Left;
+        }
+        else if(solutionFields[i].X == previousField.X && solutionFields[i].Y == previousField.Y + 1)
+        {
+            newDirection = Up;
+        }
+        else if(solutionFields[i].X == previousField.X && solutionFields[i].Y == previousField.Y - 1)
+        {
+            newDirection = Down;
+        }
+
+        if(newDirection == previousDirection)
+        {
+            straightAmount++;
+        }
+        else if(straightAmount > 0)
+        {
+            instructionVector.push_back(Instruction({straightAmount, previousDirection}));
+            straightAmount = 1;
+        }
+        else
+        {
+            straightAmount = 1;
+        }
+
+        previousDirection = newDirection;
+        previousField = solutionFields[i];
+    }
+    instructionVector.push_back(Instruction({straightAmount, previousDirection}));
+
+    return instructionVector;
 }
 
 std::vector<MazeField> MazeSolver::GetSolutionFields(Maze maze)
 {
-    std::vector<MazeField> fields = maze.GetFields();
+    std::vector<MazeField> fields = *maze.GetFields();
     MazeField start;
     Direction currentDirection = Up;
 

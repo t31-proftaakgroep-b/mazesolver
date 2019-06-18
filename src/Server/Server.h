@@ -4,6 +4,7 @@
 #include "../communication/Communication.h"
 #include "../Maze/Maze.h"
 #include "../MazeSolver/MazeSolver.h"
+#include "../Solution/Solution.h"
 
 #include <algorithm>  
 #include <arpa/inet.h>
@@ -24,6 +25,7 @@ class Server
         int GetNumberOfConnectedClients();
         void Heartbeat();
         void PlotRequest(int number);
+        std::vector<std::string> PrintSolution(int index);
         void RequestMaze();
         std::string GetMazeVisual(int index);
         void ScanRequest(int number);

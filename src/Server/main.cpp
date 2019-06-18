@@ -22,7 +22,8 @@ static void showMenu(void)
     std::cout << ("(3) Scan Maze\n");
     std::cout << ("(4) Plot Maze\n");
     std::cout << ("(5) Show Scanned Maze\n");
-    std::cout << ("(6) Exit\n");
+    std::cout << ("(6) Show Solution\n");
+    std::cout << ("(7) Exit\n");
     std::cout << ("Choice : ");
 }
 
@@ -88,10 +89,27 @@ int main(void)
               std::cerr << e.what() << '\n';
             }
             
-            std::cout << server.GetMazeVisual(selected);
+            std::cout << server.GetMazeVisual(0);
             break;
         } 
         case '6':
+        {
+            std::cout << "Select Maze" << std::endl;
+            char selected = '\0';
+            std::cin >> selected;
+            std::cin.ignore(1000, '\n');
+
+            std::vector<std::string> outputStrings = server.PrintSolution(0);
+            std::cout << "Solution gotten succesfully\n";
+
+            for (std::vector<std::string>::size_type i = 0; i < outputStrings.size(); i++)
+            {
+                std::cout << outputStrings[i];
+            }
+
+            break;
+        }
+        case '7':
         {
             quit = true;
             break;

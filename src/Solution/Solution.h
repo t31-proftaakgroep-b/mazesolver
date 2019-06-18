@@ -13,5 +13,5 @@ class Solution
     std::vector<std::string> GetInstructionStrings();
 
     private:
-    std::vector<Instruction> instructions;
+    std::vector<Instruction> *instructions;
 };

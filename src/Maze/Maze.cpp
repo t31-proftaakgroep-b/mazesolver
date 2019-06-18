@@ -38,43 +38,43 @@ Maze::Maze(std::vector<MazeField> fields)
         throw std::invalid_argument("Maze needs a start and finish");
     }
 
-    this->fields = fields;
+    *Fields = fields;
 }
 
-std::vector<MazeField> Maze::GetFields()
+std::vector<MazeField> *Maze::GetFields()
 {
-    return fields;
+    return Fields;
 }
 
 std::string Maze::GetMazeVisual()
 {
-    int maxX = 3;
-    int maxY = 3;
+    int maxX = 0;
+    int maxY = 0;
 
-    /*int i = 0;
+    int i = 0;
+    
 
-    for(std::vector<MazeField>::iterator it = fields.begin(); it != fields.end(); ++it)
+    for(std::vector<MazeField>::iterator it = Fields->begin(); it != Fields->end(); ++it)
     {
-        if(fields[i].X > maxX)
+        if(Fields->at(i).X > maxX)
         {
-            maxX = fields[i].X;
+            maxX = Fields->at(i).X;
         }
-        if(fields[i].Y > maxY)
+        if(Fields->at(i).Y > maxY)
         {
-            maxY = fields[i].Y;
+            maxY = Fields->at(i).Y;
         }
-        //i++;
+        i++;
     }
-   */
+   
 
+    std::string output = "";
 
-    std::string output = "test3";
-
-    for(int y = 0; y < maxY; y++)
+    for(int y = 0; y < maxY + 1; y++)
     {
-        for(int x = 0; x < maxX; x++)
+        for(int x = 0; x < maxX + 1; x++)
         {
-            MazeField mazeField = GetFieldAtCoordinate(0, 0);
+            MazeField mazeField = GetFieldAtCoordinate(x, y);
             if(mazeField.Type == Empty)
             {
                 output += "E";
@@ -92,6 +92,7 @@ std::string Maze::GetMazeVisual()
                 output += "F";
             }
         }
+        
         output += "\n";
     }
 
@@ -100,19 +101,17 @@ std::string Maze::GetMazeVisual()
 
 MazeField Maze::GetFieldAtCoordinate(int x, int y)
 {
-    int i = 0;
-
-    if(fields.size() > 0)
+    if(Fields->size() > 0)
     {
-        for(std::vector<MazeField>::iterator it = fields.begin(); it != fields.end(); ++it, i++)
+        for(std::vector<MazeField>::size_type i = 0; i < Fields->size(); i++)
         {
-            if(it->X == x && it->Y == y)
+            if(Fields->at(i).X == x && Fields->at(i).Y == y)
             {           
-                return *it;
+                return Fields->at(i);
             }
         }
 
-    return fields[0];
+    return Fields->at(0);
     }
     throw std::invalid_argument("fields isnt populated");
 }
