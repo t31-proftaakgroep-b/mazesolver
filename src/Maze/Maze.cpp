@@ -5,9 +5,7 @@ Maze::Maze(std::vector<MazeField> fields)
     bool containsStart = false;
     bool containsFinish = false;
 
-    int i = 0; //counter
-
-    for(std::vector<MazeField>::iterator it = fields.begin(); it != fields.end(); it++, i++)
+    for(std::vector<MazeField>::size_type i = 0; i < fields.size(); i++)
     {
         if(fields[i].Type == Start)
         {

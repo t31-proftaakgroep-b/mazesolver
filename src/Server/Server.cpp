@@ -145,7 +145,7 @@ std::string Server::GetMazeVisual(int index)
 }
 
 std::vector<std::string> Server::PrintSolution(int index)
-{
+{    
     return mazeSolver->SolveMaze(scannedMazes[index]).GetInstructionStrings();
 }
 

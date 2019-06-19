@@ -89,7 +89,7 @@ int main(void)
               std::cerr << e.what() << '\n';
             }
             
-            std::cout << server.GetMazeVisual(0);
+            std::cout << server.GetMazeVisual(selected);
             break;
         } 
         case '6':
@@ -99,8 +99,7 @@ int main(void)
             std::cin >> selected;
             std::cin.ignore(1000, '\n');
 
-            std::vector<std::string> outputStrings = server.PrintSolution(0);
-            std::cout << "Solution gotten succesfully\n";
+            std::vector<std::string> outputStrings = server.PrintSolution(selected);
 
             for (std::vector<std::string>::size_type i = 0; i < outputStrings.size(); i++)
             {
