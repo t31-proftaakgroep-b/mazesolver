@@ -1,28 +1,50 @@
-#pragma once
+#ifndef MOTOR_H
+#define MOTOR_H 
 
-#include "../Interfaces/IMotor.h"
-
-#include <stdint.h>
+#include <stdbool.h>
 #include <string>
 
 class Motor
 {
-    public:
-        Motor(std::string port, Point maxDistance);
-        ~Motor();
-
-        void Calibrate(Point position);
-        std::string GetAddress() const;
-        Direction GetDirection() const;
-        void MotorOn();
-        void MotorOff();
-        void SetDirection(Direction newDirection);
-        void ToPosition(Point newPosition);
+private:
+    int MaxDistance;
+    char MotorAs;
+    std::string motorFilePath;
     
-    private:
-        Direction direction;
-        Point position;
+	void inverseMotor(bool inversed);
+	std::string findMotorPath(std::string port);
+	void readFromFile(std::string folder, int* Value);
+	void writeToFile(std::string folder, int writeValue);
+	void writeToFile(std::string folder, std::string writeValue);
 
-        std::string address;
+public:
+    Motor(std::string portName, int maxDistance, char as);
+	virtual ~Motor();
 
+	char getMotorAs();
+	
+	void setPosition(int nextPosition);
+	
+	void moveForDistance(int distance);
+	
+	void moveToPosition(int nextPosition);
+	
+	int getPosition();
+	
+	void resetPosition();
+	
+	void goToMax();
+	
+	bool stopMotor();
+	
+	void setSpeed(int newSpeed);
+	
+	int getSpeed();
+	
+	int getMaxDistance();
+	
+	std::string getMotorFilePath();
 };
+
+#endif
+
